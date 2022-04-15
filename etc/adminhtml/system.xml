@@ -1,0 +1,73 @@
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <section id="payment">
+            <group id="bnplpartners_factoring004magento" translate="label comment" type="text" sortOrder="100"
+                   showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Factoring 0-0-4</label>
+
+                <field id="active" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1"
+                       showInStore="0">
+                    <label>Enabled</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+
+                <field id="title" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="1"
+                       showInStore="1">
+                    <label>Title</label>
+                </field>
+
+                <field id="api_host" translate="label" type="text" sortOrder="35" showInDefault="1" showInWebsite="1"
+                       showInStore="1">
+                    <label>API Host</label>
+                </field>
+
+                <field id="oauth_preapp_token" translate="label" type="text" sortOrder="40" showInDefault="1" showInWebsite="1"
+                       showInStore="1">
+                    <label>OAuth Preapp Token</label>
+                </field>
+
+                <field id="oauth_accounting_service_token" translate="label" type="text" sortOrder="45" showInDefault="1" showInWebsite="1"
+                       showInStore="1">
+                    <label>OAuth Accounting Service Token</label>
+                </field>
+
+                <field id="partner_name" translate="label" type="text" sortOrder="50" showInDefault="1" showInWebsite="1"
+                       showInStore="1">
+                    <label>Partner Name</label>
+                </field>
+
+                <field id="partner_code" translate="label" type="text" sortOrder="55" showInDefault="1" showInWebsite="1"
+                       showInStore="1">
+                    <label>Partner Code</label>
+                </field>
+
+                <field id="point_code" translate="label" type="text" sortOrder="60" showInDefault="1" showInWebsite="1"
+                       showInStore="1">
+                    <label>Point Code</label>
+                </field>
+
+                <field id="partner_email" translate="label" type="text" sortOrder="65" showInDefault="1" showInWebsite="1"
+                       showInStore="1">
+                    <label>Partner Email</label>
+                </field>
+
+                <field id="partner_website" translate="label" type="text" sortOrder="70" showInDefault="1" showInWebsite="1"
+                       showInStore="1">
+                    <label>Partner Website</label>
+                </field>
+
+                <field id="agreement_file" translate="label" type="file" sortOrder="75" showInDefault="1" showInWebsite="1"
+                       showInStore="1">
+                    <label>Agreement File</label>
+                </field>
+
+                <field id="confirmable_delivery_methods" translate="label" type="multiselect" sortOrder="80" showInDefault="1"
+                       showInWebsite="1" showInStore="0">
+                    <label>Confirmable Delivery Methods</label>
+                    <source_model>BnplPartners\Factoring004Magento\Model\DeliveryMethod</source_model>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

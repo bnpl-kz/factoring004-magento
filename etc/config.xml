@@ -1,0 +1,21 @@
+<?xml version="1.0" ?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <payment>
+            <bnplpartners_factoring004magento>
+                <title>Factoring 0-0-4</title>
+                <active>0</active>
+                <debug>0</debug>
+                <payment_action>authorize</payment_action>
+                <model>BnplPartners\Factoring004Magento\Model\Factoring004</model>
+                <order_status>pending</order_status>
+                <currency>KZT</currency>
+                <is_gateway>1</is_gateway>
+                <sort_order>1</sort_order>
+                <min_order_total>6000</min_order_total>
+                <max_order_total>200000</max_order_total>
+            </bnplpartners_factoring004magento>
+        </payment>
+    </default>
+</config>

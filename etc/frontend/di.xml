@@ -10,4 +10,14 @@
             </argument>
         </arguments>
     </type>
+
+    <type name="Magento\Checkout\Model\CompositeConfigProvider">
+        <arguments>
+            <argument name="configProviders" xsi:type="array">
+                <item name="bnplpartners_factoring004magento_checkout_config_provider" xsi:type="object">
+                    BnplPartners\Factoring004Magento\Model\ConfigProvider
+                </item>
+            </argument>
+        </arguments>
+    </type>
 </config>

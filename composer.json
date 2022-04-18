@@ -1,0 +1,27 @@
+{
+    "name": "bnpl-partners/magento-factoring004",
+    "description": "Factoring004 plugin for magento 2",
+    "type": "magento2-module",
+    "minimum-stability": "dev",
+    "license": "MIT",
+    "require": {
+        "php": ">=7.3",
+        "ext-json": "*",
+        "bnpl-partners/factoring004": "dev-legacy",
+        "magento/framework": ">=100.0.4"
+    },
+    "autoload": {
+        "files": ["registration.php"],
+        "psr-4": {
+            "BnplPartners\\Factoring004\\": ""
+        }
+    },
+    "prefer-stable": true,
+    "config": {
+        "preferred-install": "dist",
+        "sort-packages": true,
+        "platform": {
+            "php": "7.3.29"
+        }
+    }
+}

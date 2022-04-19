@@ -3,4 +3,8 @@
     <event name="sales_order_save_after">
         <observer name="bnpl_partners_factoring004magento_order_save_after" instance="BnplPartners\Factoring004Magento\Observer\OrderSaveAfter"/>
     </event>
+
+    <event name="sales_order_place_after">
+        <observer name="bnpl_partners_factoring004magento_place_order_after" instance="BnplPartners\Factoring004Magento\Observer\OrderPlaceAfter"/>
+    </event>
 </config>

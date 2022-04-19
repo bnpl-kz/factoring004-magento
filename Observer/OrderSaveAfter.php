@@ -7,6 +7,7 @@ namespace BnplPartners\Factoring004Magento\Observer;
 use BnplPartners\Factoring004\Api;
 use BnplPartners\Factoring004\Auth\BearerTokenAuth;
 use BnplPartners\Factoring004\PreApp\PreAppMessage;
+use BnplPartners\Factoring004Magento\Helper\ConfigReaderTrait;
 use BnplPartners\Factoring004Magento\Model\Factoring004;
 use Magento\Checkout\Model\Session;
 use Magento\Framework\App\Config\ScopeConfigInterface;
@@ -18,10 +19,7 @@ use Magento\Sales\Model\Order\Item;
 
 class OrderSaveAfter implements ObserverInterface
 {
-    /**
-     * @var \Magento\Framework\App\Config\ScopeConfigInterface
-     */
-    private $config;
+    use ConfigReaderTrait;
 
     /**
      * @var \Magento\Checkout\Model\Session
@@ -92,14 +90,6 @@ class OrderSaveAfter implements ObserverInterface
             $this->getConfigValue('api_host'),
             new BearerTokenAuth($this->getConfigValue('oauth_preapp_token')),
         );
-    }
-
-    /**
-     * @return mixed
-     */
-    private function getConfigValue(string $key)
-    {
-        return $this->config->getValue('payment/' . Factoring004::METHOD_CODE . '/' . $key);
     }
 
     /**

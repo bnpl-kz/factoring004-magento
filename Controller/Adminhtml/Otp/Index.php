@@ -9,9 +9,11 @@ use Magento\Backend\App\Action\Context;
 use Magento\Backend\Model\Session;
 use Magento\Backend\Model\UrlInterface;
 use Magento\Framework\App\RequestInterface;
+use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\View\Element\AbstractBlock;
 use Magento\Framework\View\Result\PageFactory;
-use Magento\Shipping\Controller\Adminhtml\Order\Shipment\Save;
+use Magento\Sales\Controller\Adminhtml\Order\Creditmemo\Save as CreditMemoSave;
+use Magento\Shipping\Controller\Adminhtml\Order\Shipment\Save as ShipmentSave;
 
 class Index extends Action
 {
@@ -23,9 +25,9 @@ class Index extends Action
     private $resultPageFactory;
 
     /**
-     * @var \Magento\Shipping\Controller\Adminhtml\Order\Shipment\Save
+     * @var \Magento\Backend\App\Action
      */
-    private $shipmentSaveAction;
+    private $saveAction;
 
     /**
      * @var \Magento\Backend\Model\Session
@@ -35,25 +37,24 @@ class Index extends Action
     public function __construct(
         Context $context,
         PageFactory $resultPageFactory,
-        Save $shipmentSaveAction,
         Session $session
     ) {
         parent::__construct($context);
 
         $this->resultPageFactory = $resultPageFactory;
-        $this->shipmentSaveAction = $shipmentSaveAction;
+        $this->saveAction = $this->createAction();
         $this->session = $session;
 
         // We should substitute params before call any methods on shipment action
         if ($this->getRequest()->isPost()) {
-            $this->substituteRequestParamsToShipmentData();
+            $this->substituteRequestParamsFromSession();
         }
     }
 
     protected function _getSession()
     {
         if ($this->getRequest()->isPost()) {
-            return $this->shipmentSaveAction->_getSession();
+            return $this->saveAction->_getSession();
         }
 
         return parent::_getSession();
@@ -62,7 +63,7 @@ class Index extends Action
     public function dispatch(RequestInterface $request)
     {
         if ($this->getRequest()->isPost()) {
-            return $this->shipmentSaveAction->dispatch($request);
+            return $this->saveAction->dispatch($request);
         }
 
         return parent::dispatch($request);
@@ -71,7 +72,7 @@ class Index extends Action
     public function getUrl($route = '', $params = [])
     {
         if ($this->getRequest()->isPost()) {
-            return $this->shipmentSaveAction->getUrl($route, $params);
+            return $this->saveAction->getUrl($route, $params);
         }
 
         return parent::getUrl($route, $params);
@@ -80,7 +81,7 @@ class Index extends Action
     protected function _isAllowed()
     {
         if ($this->getRequest()->isPost()) {
-            return $this->shipmentSaveAction->_isAllowed();
+            return $this->saveAction->_isAllowed();
         }
 
         return parent::_isAllowed();
@@ -89,7 +90,7 @@ class Index extends Action
     protected function getMessageManager()
     {
         if ($this->getRequest()->isPost()) {
-            return $this->shipmentSaveAction->getMessageManager();
+            return $this->saveAction->getMessageManager();
         }
 
         return parent::getMessageManager();
@@ -98,7 +99,7 @@ class Index extends Action
     protected function _setActiveMenu($itemId)
     {
         if ($this->getRequest()->isPost()) {
-            return $this->shipmentSaveAction->_setActiveMenu($itemId);
+            return $this->saveAction->_setActiveMenu($itemId);
         }
 
         return parent::_setActiveMenu($itemId);
@@ -107,7 +108,7 @@ class Index extends Action
     protected function _addBreadcrumb($label, $title, $link = null)
     {
         if ($this->getRequest()->isPost()) {
-            return $this->shipmentSaveAction->_addBreadcrumb($label, $title, $link);
+            return $this->saveAction->_addBreadcrumb($label, $title, $link);
         }
 
         return parent::_addBreadcrumb($label, $title, $link);
@@ -116,7 +117,7 @@ class Index extends Action
     protected function _addContent(AbstractBlock $block)
     {
         if ($this->getRequest()->isPost()) {
-            return $this->shipmentSaveAction->_addContent($block);
+            return $this->saveAction->_addContent($block);
         }
 
         return parent::_addContent($block);
@@ -125,7 +126,7 @@ class Index extends Action
     protected function _addLeft(AbstractBlock $block)
     {
         if ($this->getRequest()->isPost()) {
-            return $this->shipmentSaveAction->_addLeft($block);
+            return $this->saveAction->_addLeft($block);
         }
 
         return parent::_addLeft($block);
@@ -134,7 +135,7 @@ class Index extends Action
     protected function _addJs(AbstractBlock $block)
     {
         if ($this->getRequest()->isPost()) {
-            return $this->shipmentSaveAction->_addJs($block);
+            return $this->saveAction->_addJs($block);
         }
 
         return parent::_addJs($block);
@@ -143,7 +144,7 @@ class Index extends Action
     protected function _isUrlChecked()
     {
         if ($this->getRequest()->isPost()) {
-            return $this->shipmentSaveAction->_isUrlChecked();
+            return $this->saveAction->_isUrlChecked();
         }
 
         return parent::_isUrlChecked();
@@ -152,7 +153,7 @@ class Index extends Action
     protected function _processLocaleSettings()
     {
         if ($this->getRequest()->isPost()) {
-            return $this->shipmentSaveAction->_processLocaleSettings();
+            return $this->saveAction->_processLocaleSettings();
         }
 
         return parent::_processLocaleSettings();
@@ -161,7 +162,7 @@ class Index extends Action
     protected function _redirect($path, $arguments = [])
     {
         if ($this->getRequest()->isPost()) {
-            return $this->shipmentSaveAction->_redirect($path, $arguments);
+            return $this->saveAction->_redirect($path, $arguments);
         }
 
         return parent::_redirect($path, $arguments);
@@ -175,7 +176,7 @@ class Index extends Action
     protected function _validateSecretKey()
     {
         if ($this->getRequest()->isPost()) {
-            return $this->shipmentSaveAction->_validateSecretKey();
+            return $this->saveAction->_validateSecretKey();
         }
 
         return parent::_validateSecretKey();
@@ -184,7 +185,7 @@ class Index extends Action
     public function getActionFlag()
     {
         if ($this->getRequest()->isPost()) {
-            return $this->shipmentSaveAction->getActionFlag();
+            return $this->saveAction->getActionFlag();
         }
 
         return parent::getActionFlag();
@@ -193,7 +194,7 @@ class Index extends Action
     public function _processUrlKeys()
     {
         if ($this->getRequest()->isPost()) {
-            return $this->shipmentSaveAction->_processUrlKeys();
+            return $this->saveAction->_processUrlKeys();
         }
 
         return parent::_processUrlKeys();
@@ -205,19 +206,42 @@ class Index extends Action
     public function execute()
     {
         if ($this->getRequest()->isPost()) {
-            return $this->shipmentSaveAction->execute();
+            return $this->saveAction->execute();
         }
 
         return $this->resultPageFactory->create();
     }
 
-    private function substituteRequestParamsToShipmentData(): void
+    private function substituteRequestParamsFromSession(): void
     {
-        $params = $this->session->getShipmentData() ?? [];
+        $params = $this->session->getData('factoring004_' . $this->getDoAction() . '_data') ?? [];
 
         $this->getRequest()->setParams(array_merge($params, [
             'form_key' => $this->getRequest()->getParam('form_key'),
-            'key' => $this->shipmentSaveAction->_backendUrl->getSecretKey(),
+            'key' => $this->saveAction->_backendUrl->getSecretKey(),
         ]));
+    }
+
+    /**
+     * @throws \Magento\Framework\Exception\LocalizedException
+     */
+    private function createAction(): Action
+    {
+        $action = $this->getDoAction();
+
+        if ($action === 'shipment') {
+            return $this->_objectManager->get(ShipmentSave::class);
+        }
+
+        if ($action === 'refund') {
+            return $this->_objectManager->get(CreditMemoSave::class);
+        }
+
+        throw new LocalizedException(__('Unsupported action given'));
+    }
+
+    private function getDoAction(): string
+    {
+        return $this->getRequest()->getParam('fields', ['do' => 'shipment'])['do'];
     }
 }

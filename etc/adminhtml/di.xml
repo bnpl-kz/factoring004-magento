@@ -6,4 +6,7 @@
 
     <preference for="Magento\Shipping\Controller\Adminhtml\Order\Shipment\Save"
                 type="BnplPartners\Factoring004Magento\Controller\SaveOrderShipment"/>
+
+    <preference for="Magento\Sales\Controller\Adminhtml\Order\Creditmemo\Save"
+                type="BnplPartners\Factoring004Magento\Controller\SaveCreditMemo"/>
 </config>

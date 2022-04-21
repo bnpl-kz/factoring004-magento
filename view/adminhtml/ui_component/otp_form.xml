@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="urn:magento:frameworkUi/etc/ui_configuration.xsd">
+    <argument name="data" xsi:type="array">
+        <item name="js_config" xsi:type="array">
+            <item name="provider" xsi:type="string">otp_form.otp_form_data_source</item>
+            <item name="deps" xsi:type="string">otp_form.otp_form_data_source</item>
+        </item>
+        <item name="label" xsi:type="string" translate="true">Check OTP</item>
+        <item name="layout" xsi:type="array">
+            <item name="type" xsi:type="string">tabs</item>
+        </item>
+    </argument>
+
+    <settings>
+        <buttons>
+            <button name="save" class="BnplPartners\Factoring004Magento\Form\CheckButton"/>
+        </buttons>
+    </settings>
+
+    <dataSource name="otp_form_data_source">
+        <argument name="dataProvider" xsi:type="configurableObject">
+            <argument name="class" xsi:type="string">BnplPartners\Factoring004Magento\Form\OtpDataProvider</argument>
+            <argument name="name" xsi:type="string">otp_form_data_source</argument>
+            <argument name="primaryFieldName" xsi:type="string">delivery</argument>
+            <argument name="requestFieldName" xsi:type="string">key</argument>
+        </argument>
+        <argument name="data" xsi:type="array">
+            <item name="js_config" xsi:type="array">
+                <item name="component" xsi:type="string">Magento_Ui/js/form/provider</item>
+            </item>
+        </argument>
+        <settings>
+            <submitUrl path="factoring004/otp/index"/>
+        </settings>
+    </dataSource>
+
+    <fieldset name="fields">
+        <argument name="data" xsi:type="array">
+            <item name="config" xsi:type="array">
+                <item name="label" xsi:type="string" translate="true">Check OTP</item>
+            </item>
+        </argument>
+
+        <field name="otp" formElement="input">
+            <settings>
+                <visible>true</visible>
+                <label translate="true">OTP</label>
+                <dataScope>otp</dataScope>
+            </settings>
+        </field>
+    </fieldset>
+</form>

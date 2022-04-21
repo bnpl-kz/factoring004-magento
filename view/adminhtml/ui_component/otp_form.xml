@@ -22,8 +22,8 @@
         <argument name="dataProvider" xsi:type="configurableObject">
             <argument name="class" xsi:type="string">BnplPartners\Factoring004Magento\Form\OtpDataProvider</argument>
             <argument name="name" xsi:type="string">otp_form_data_source</argument>
-            <argument name="primaryFieldName" xsi:type="string">delivery</argument>
-            <argument name="requestFieldName" xsi:type="string">key</argument>
+            <argument name="primaryFieldName" xsi:type="string">do</argument>
+            <argument name="requestFieldName" xsi:type="string">do</argument>
         </argument>
         <argument name="data" xsi:type="array">
             <item name="js_config" xsi:type="array">
@@ -49,5 +49,11 @@
                 <dataScope>otp</dataScope>
             </settings>
         </field>
+
+        <hidden name="do">
+            <settings>
+                <dataScope>do</dataScope>
+            </settings>
+        </hidden>
     </fieldset>
 </form>

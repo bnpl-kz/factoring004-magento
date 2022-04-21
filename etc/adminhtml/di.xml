@@ -3,4 +3,7 @@
         xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
     <preference for="Magento\Config\Controller\Adminhtml\System\Config\Save"
                 type="BnplPartners\Factoring004Magento\Controller\SaveConfig"/>
+
+    <preference for="Magento\Shipping\Controller\Adminhtml\Order\Shipment\Save"
+                type="BnplPartners\Factoring004Magento\Controller\SaveOrderShipment"/>
 </config>

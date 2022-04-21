@@ -111,7 +111,7 @@ class SaveOrderShipment extends Save
             $this->storeShipmentDataToSession();
 
             return $this->redirectFactory->create()
-                ->setPath($this->_backendUrl->getUrl('factoring004/otp/index'));
+                ->setPath($this->_backendUrl->getUrl('factoring004/otp/index/do/shipment'));
         }
 
         $this->confirmWithoutOtp((string) $order->getEntityId());
@@ -197,13 +197,12 @@ class SaveOrderShipment extends Save
         unset($params['key']);
         unset($params['form_key']);
 
-        $this->session->setShipmentData($params);
+        $this->session->setData('factoring004_shipment_data', $params);
     }
 
     private function removeShipmentDataFromSession(): void
     {
-        // pull shipment data
-        $this->session->getShipmentData(true);
+        $this->session->unsetData('factoring004_shipment_data');
     }
 
     /**

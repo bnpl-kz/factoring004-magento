@@ -60,6 +60,10 @@
                 <field id="agreement_file" translate="label" type="file" sortOrder="75" showInDefault="1" showInWebsite="1"
                        showInStore="1">
                     <label>Agreement File</label>
+                    <backend_model>BnplPartners\Factoring004Magento\Model\AgreementFile</backend_model>
+                    <upload_dir config="system" scope_info="1">factoring004</upload_dir>
+                    <base_url type="media" scope_info="1">factoring004</base_url>
+                    <comment>Upload an agreement PDF file if you need to show it a customer</comment>
                 </field>
 
                 <field id="confirmable_delivery_methods" translate="label" type="multiselect" sortOrder="80" showInDefault="1"

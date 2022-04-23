@@ -22,12 +22,12 @@
                     <label>API Host</label>
                 </field>
 
-                <field id="oauth_preapp_token" translate="label" type="text" sortOrder="40" showInDefault="1" showInWebsite="1"
+                <field id="oauth_preapp_token" translate="label" type="textarea" sortOrder="40" showInDefault="1" showInWebsite="1"
                        showInStore="1">
                     <label>OAuth Preapp Token</label>
                 </field>
 
-                <field id="oauth_accounting_service_token" translate="label" type="text" sortOrder="45" showInDefault="1" showInWebsite="1"
+                <field id="oauth_accounting_service_token" translate="label" type="textarea" sortOrder="45" showInDefault="1" showInWebsite="1"
                        showInStore="1">
                     <label>OAuth Accounting Service Token</label>
                 </field>

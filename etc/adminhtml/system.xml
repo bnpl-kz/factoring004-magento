@@ -15,46 +15,55 @@
                 <field id="title" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="1"
                        showInStore="1">
                     <label>Title</label>
+                    <validate>required-entry</validate>
                 </field>
 
                 <field id="api_host" translate="label" type="text" sortOrder="35" showInDefault="1" showInWebsite="1"
                        showInStore="1">
                     <label>API Host</label>
+                    <validate>required-entry validate-url</validate>
                 </field>
 
                 <field id="oauth_preapp_token" translate="label" type="textarea" sortOrder="40" showInDefault="1" showInWebsite="1"
                        showInStore="1">
                     <label>OAuth Preapp Token</label>
+                    <validate>required-entry</validate>
                 </field>
 
                 <field id="oauth_accounting_service_token" translate="label" type="textarea" sortOrder="45" showInDefault="1" showInWebsite="1"
                        showInStore="1">
                     <label>OAuth Accounting Service Token</label>
+                    <validate>required-entry</validate>
                 </field>
 
                 <field id="partner_name" translate="label" type="text" sortOrder="50" showInDefault="1" showInWebsite="1"
                        showInStore="1">
                     <label>Partner Name</label>
+                    <validate>required-entry</validate>
                 </field>
 
                 <field id="partner_code" translate="label" type="text" sortOrder="55" showInDefault="1" showInWebsite="1"
                        showInStore="1">
                     <label>Partner Code</label>
+                    <validate>required-entry</validate>
                 </field>
 
                 <field id="point_code" translate="label" type="text" sortOrder="60" showInDefault="1" showInWebsite="1"
                        showInStore="1">
                     <label>Point Code</label>
+                    <validate>required-entry</validate>
                 </field>
 
                 <field id="partner_email" translate="label" type="text" sortOrder="65" showInDefault="1" showInWebsite="1"
                        showInStore="1">
                     <label>Partner Email</label>
+                    <validate>required-entry validate-email</validate>
                 </field>
 
                 <field id="partner_website" translate="label" type="text" sortOrder="70" showInDefault="1" showInWebsite="1"
                        showInStore="1">
                     <label>Partner Website</label>
+                    <validate>required-entry validate-url</validate>
                 </field>
 
                 <field id="agreement_file" translate="label" type="file" sortOrder="75" showInDefault="1" showInWebsite="1"
@@ -76,18 +85,21 @@
                        showInWebsite="1" showInStore="0">
                     <label>New Order Status</label>
                     <source_model>Magento\Sales\Model\Config\Source\Order\Status</source_model>
+                    <validate>required-entry</validate>
                 </field>
 
                 <field id="order_paid_status" translate="label" type="select" sortOrder="90" showInDefault="1"
                        showInWebsite="1" showInStore="0">
                     <label>Paid Order Status</label>
                     <source_model>Magento\Sales\Model\Config\Source\Order\Status</source_model>
+                    <validate>required-entry</validate>
                 </field>
 
                 <field id="order_declined_status" translate="label" type="select" sortOrder="95" showInDefault="1"
                        showInWebsite="1" showInStore="0">
                     <label>Declined Order Status</label>
                     <source_model>Magento\Sales\Model\Config\Source\Order\Status</source_model>
+                    <validate>required-entry</validate>
                 </field>
             </group>
         </section>

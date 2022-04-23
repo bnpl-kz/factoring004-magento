@@ -103,6 +103,7 @@
                     <label>New Order Status</label>
                     <source_model>Magento\Sales\Model\Config\Source\Order\Status</source_model>
                     <validate>required-entry</validate>
+                    <tooltip>Override default status for new orders</tooltip>
                 </field>
 
                 <field id="order_paid_status" translate="label" type="select" sortOrder="90" showInDefault="1"

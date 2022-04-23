@@ -64,6 +64,7 @@
                        showInStore="1">
                     <label>Partner Website</label>
                     <validate>required-entry validate-url</validate>
+                    <backend_model>BnplPartners\Factoring004Magento\Model\PartnerWebsite</backend_model>
                 </field>
 
                 <field id="agreement_file" translate="label" type="file" sortOrder="75" showInDefault="1" showInWebsite="1"

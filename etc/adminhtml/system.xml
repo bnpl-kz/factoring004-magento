@@ -93,8 +93,9 @@
 
                 <field id="confirmable_delivery_methods" translate="label" type="multiselect" sortOrder="80" showInDefault="1"
                        showInWebsite="1" showInStore="0">
-                    <label>Confirmable Delivery Methods</label>
+                    <label>OTP Confirmable Delivery Methods</label>
                     <source_model>BnplPartners\Factoring004Magento\Model\DeliveryMethod</source_model>
+                    <tooltip>Order status changes such as shipment, refund and cancel placed with a selected delivery method will be confirmed by OTP</tooltip>
                 </field>
 
                 <field id="order_status" translate="label" type="select" sortOrder="85" showInDefault="1"

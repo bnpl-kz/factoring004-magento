@@ -6,6 +6,13 @@
                data-bind="attr: {'id': getCode()}, value: getCode(), checked: isChecked, click: selectPaymentMethod, visible: isRadioButtonVisible()"/>
         <label data-bind="attr: {'for': getCode()}" class="label"><span data-bind="text: getTitle()"></span></label>
     </div>
+
+    <div style="margin-bottom: 20px" data-bind="attr: {hidden: logoUrl === null}" hidden>
+        <img style="max-width: 100%" data-bind="attr: {src: logoUrl(), alt: $t('Factoring 0-0-4')}">
+    </div>
+
+    <div style="margin-bottom: 20px" data-bind="attr: {hidden: description === null}, text: description()" hidden></div>
+
     <div class="payment-method-content">
         <!-- ko foreach: getRegion('messages') -->
         <!-- ko template: getTemplate() --><!-- /ko -->

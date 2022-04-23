@@ -22,11 +22,14 @@ class ConfigProvider implements ConfigProviderInterface
     public function getConfig(): array
     {
         $agreementFile = $this->getConfigValue('agreement_file');
+        $logoFile = $this->getConfigValue('logo');
 
         return [
             'payment' => [
                 Factoring004::METHOD_CODE => [
                     'agreementUrl' => $agreementFile ? static::MEDIA_PATH. ltrim($agreementFile, '/') : null,
+                    'logoUrl' => $logoFile ? static::MEDIA_PATH . ltrim($logoFile, '/') : null,
+                    'description' => $this->getConfigValue('description'),
                 ],
             ],
         ];

@@ -31,6 +31,14 @@ define(
             agreementUrl () {
                 return window.checkoutConfig.payment.bnplpartners_factoring004magento.agreementUrl;
             },
+
+            logoUrl () {
+                return window.checkoutConfig.payment.bnplpartners_factoring004magento.logoUrl;
+            },
+
+            description () {
+                return window.checkoutConfig.payment.bnplpartners_factoring004magento.description;
+            }
         });
     }
 );

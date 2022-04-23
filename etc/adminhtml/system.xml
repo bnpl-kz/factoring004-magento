@@ -18,6 +18,21 @@
                     <validate>required-entry</validate>
                 </field>
 
+                <field id="description" translate="label" type="textarea" sortOrder="32" showInDefault="1" showInWebsite="1"
+                       showInStore="1">
+                    <label>Description</label>
+                    <validate>required-entry</validate>
+                </field>
+
+                <field id="logo" translate="label" type="BnplPartners\Factoring004Magento\Form\LogoField" sortOrder="33" showInDefault="1" showInWebsite="1"
+                       showInStore="1">
+                    <label>Logo</label>
+                    <backend_model>BnplPartners\Factoring004Magento\Model\Logo</backend_model>
+                    <upload_dir config="system" scope_info="1">factoring004</upload_dir>
+                    <base_url type="media" scope_info="1">factoring004</base_url>
+                    <comment>Extensions: jpg, jpeg, gif, png</comment>
+                </field>
+
                 <field id="api_host" translate="label" type="text" sortOrder="35" showInDefault="1" showInWebsite="1"
                        showInStore="1">
                     <label>API Host</label>

@@ -8,6 +8,7 @@
                 <active>0</active>
                 <debug>0</debug>
                 <payment_action>authorize</payment_action>
+                <description>Купи сейчас, плати потом! Быстрое и удобное оформление рассрочки на 4 месяца без первоначальной оплаты. Моментальное подтверждение, без комиссий и процентов. Для заказов суммой от 6000 до 200000 тг.</description>
                 <model>BnplPartners\Factoring004Magento\Model\Factoring004</model>
                 <order_status>pending</order_status>
                 <order_paid_status>processing</order_paid_status>

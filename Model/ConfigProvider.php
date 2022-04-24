@@ -13,6 +13,7 @@ class ConfigProvider implements ConfigProviderInterface
     use ConfigReaderTrait;
 
     protected const MEDIA_PATH = '/media/factoring004/';
+    protected const DEFAULT_LOGO = 'default/logo.svg';
 
     public function __construct(ScopeConfigInterface $scopeConfig)
     {
@@ -22,13 +23,13 @@ class ConfigProvider implements ConfigProviderInterface
     public function getConfig(): array
     {
         $agreementFile = $this->getConfigValue('agreement_file');
-        $logoFile = $this->getConfigValue('logo');
+        $logoFile = $this->getConfigValue('logo') ?? static::DEFAULT_LOGO;
 
         return [
             'payment' => [
                 Factoring004::METHOD_CODE => [
                     'agreementUrl' => $agreementFile ? static::MEDIA_PATH. ltrim($agreementFile, '/') : null,
-                    'logoUrl' => $logoFile ? static::MEDIA_PATH . ltrim($logoFile, '/') : null,
+                    'logoUrl' => static::MEDIA_PATH . ltrim($logoFile, '/'),
                     'description' => $this->getConfigValue('description'),
                 ],
             ],

@@ -33,49 +33,49 @@
                     <comment>Extensions: jpg, jpeg, gif, png</comment>
                 </field>
 
-                <field id="api_host" translate="label" type="text" sortOrder="35" showInDefault="1" showInWebsite="1"
+                <field id="api_host" type="text" sortOrder="35" showInDefault="1" showInWebsite="1"
                        showInStore="1">
                     <label>API Host</label>
                     <validate>required-entry validate-url</validate>
                 </field>
 
-                <field id="oauth_preapp_token" translate="label" type="textarea" sortOrder="40" showInDefault="1" showInWebsite="1"
+                <field id="oauth_preapp_token" type="textarea" sortOrder="40" showInDefault="1" showInWebsite="1"
                        showInStore="1">
                     <label>OAuth Preapp Token</label>
                     <validate>required-entry</validate>
                 </field>
 
-                <field id="oauth_accounting_service_token" translate="label" type="textarea" sortOrder="45" showInDefault="1" showInWebsite="1"
+                <field id="oauth_accounting_service_token" type="textarea" sortOrder="45" showInDefault="1" showInWebsite="1"
                        showInStore="1">
                     <label>OAuth Accounting Service Token</label>
                     <validate>required-entry</validate>
                 </field>
 
-                <field id="partner_name" translate="label" type="text" sortOrder="50" showInDefault="1" showInWebsite="1"
+                <field id="partner_name" type="text" sortOrder="50" showInDefault="1" showInWebsite="1"
                        showInStore="1">
                     <label>Partner Name</label>
                     <validate>required-entry</validate>
                 </field>
 
-                <field id="partner_code" translate="label" type="text" sortOrder="55" showInDefault="1" showInWebsite="1"
+                <field id="partner_code" type="text" sortOrder="55" showInDefault="1" showInWebsite="1"
                        showInStore="1">
                     <label>Partner Code</label>
                     <validate>required-entry</validate>
                 </field>
 
-                <field id="point_code" translate="label" type="text" sortOrder="60" showInDefault="1" showInWebsite="1"
+                <field id="point_code" type="text" sortOrder="60" showInDefault="1" showInWebsite="1"
                        showInStore="1">
                     <label>Point Code</label>
                     <validate>required-entry</validate>
                 </field>
 
-                <field id="partner_email" translate="label" type="text" sortOrder="65" showInDefault="1" showInWebsite="1"
+                <field id="partner_email" type="text" sortOrder="65" showInDefault="1" showInWebsite="1"
                        showInStore="1">
                     <label>Partner Email</label>
                     <validate>required-entry validate-email</validate>
                 </field>
 
-                <field id="partner_website" translate="label" type="text" sortOrder="70" showInDefault="1" showInWebsite="1"
+                <field id="partner_website" type="text" sortOrder="70" showInDefault="1" showInWebsite="1"
                        showInStore="1">
                     <label>Partner Website</label>
                     <validate>required-entry validate-url</validate>

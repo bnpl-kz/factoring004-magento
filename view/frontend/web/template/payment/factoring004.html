@@ -31,10 +31,11 @@
             <div data-bind="attr: {hidden: agreementUrl === null}" hidden>
                 <label>
                     <input type="checkbox" data-bind="checked: termsChecked" required>
-                    I have read and agree Factoring 0-0-4's <a href="#" target="_blank" data-bind="attr: {href: agreementUrl()}">terms and conditions</a>
+                    <!-- ko i18n: 'I have read and agree Factoring 0-0-4\'s ' --><!-- /ko -->
+                    <a href="#" target="_blank" data-bind="attr: {href: agreementUrl()}, text: $t('terms and conditions')"></a>
                 </label>
 
-                <p style="margin: 1rem 0; color: red;" data-bind="attr: {hidden: termsChecked}" hidden>You should agree the terms and conditions</p>
+                <p style="margin: 1rem 0; color: red;" data-bind="attr: {hidden: termsChecked}, i18n: $t('You should agree the terms and conditions')" hidden></p>
             </div>
 
             <div class="primary">

@@ -1,0 +1,30 @@
+"Unsupported action given","Действие не поддерживается"
+"Order payment is not factoring004","Метод оплаты заказа не рассрочка 0-0-4"
+"Unsupported %1 status received","Передан не поддерживаемый статус %1"
+"Status is missing or is not a string","Поле status не указано или не является строкой"
+"BillNumber is missing or is not a string","Поле billNumber не указано или не является строкой"
+"PreappId is missing or is not a string","Поле preappId не указано или не является строкой"
+"OTP code is not valid","Неверный OTP код"
+Check,Проверить
+"Factoring 0-0-4","Рассрочка 0-0-4"
+"Place Order","Заказать"
+Enabled,Включен
+Yes,Да
+No,Нет
+Title,Название
+Description,Описание
+Logo,Логотип
+"Extensions: jpg, jpeg, gif, png","Расширения: jpg, jpeg, gif, png"
+"Agreement File","Файл оферты"
+"Upload an agreement PDF file if you need to show it a customer","Загрузите файл оферты, если вам необходимо его отобразить клиенту"
+"OTP Confirmable Delivery Methods","Подтверждаемые OTP Способы Доставки"
+"Order status changes such as shipment, refund and cancel placed with a selected delivery method will be confirmed by OTP","При смене статусов заказа на доставка, возврат и отмена, потребуются подтверждение OTP"
+"New Order Status","Статус Новых Заказов"
+"Override default status for new orders","Переопределить статус нового заказа по-умолчанию"
+"Paid Order Status","Статус Оплаченных Заказов"
+"Declined Order Status","Статус Неоплаченных Заказов"
+"Check OTP","Проверить OTP"
+"Delete File","Удалить файл"
+"I have read and agree Factoring 0-0-4's ","Я ознакомлен и согласен с "
+"terms and conditions","условиями Рассрочки 0-0-4"
+"You should agree the terms and conditions","Вам необходимо ознакомиться с условиями Рассрочки 0-0-4"

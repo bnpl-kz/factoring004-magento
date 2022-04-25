@@ -29,9 +29,9 @@ class OrderPlaceAfter implements ObserverInterface
             return;
         }
 
-        $state = $this->config->getValue('order_status');
+        [$state, $status] = $this->getOrderStateAndStatus('order_status');
 
         $order->setState($state);
-        $order->setStatus($order->getConfig()->getStateDefaultStatus($state));
+        $order->setStatus($status);
     }
 }

@@ -22,7 +22,6 @@ use Magento\Framework\Webapi\Rest\Request;
 use Magento\Sales\Api\Data\OrderInterface;
 use Magento\Sales\Api\Data\TransactionInterface;
 use Magento\Sales\Api\OrderRepositoryInterface;
-use Magento\Sales\Model\Order;
 use Magento\Sales\Model\Order\Invoice;
 use Magento\Sales\Model\Order\Payment\Transaction\BuilderInterface;
 
@@ -115,18 +114,18 @@ class Index extends Action implements CsrfAwareActionInterface, HttpPostActionIn
 
         if ($data['status'] === static::STATUS_COMPLETED) {
             $invoiceState = Invoice::STATE_PAID;
-            $orderState = $this->getConfigValue('order_paid_status');
+            [$orderState, $orderStatus] = $this->getOrderStateAndStatus('order_paid_status');
             $responseValue = static::RESPONSE_OK;
         } elseif ($data['status'] === static::STATUS_DECLINED) {
             $invoiceState = Invoice::STATE_CANCELED;
-            $orderState = $this->getConfigValue('order_declined_status');
+            [$orderState, $orderStatus] = $this->getOrderStateAndStatus('order_declined_status');
             $responseValue = static::STATUS_DECLINED;
         } else {
             throw new LocalizedException(__('Unsupported %1 status received', $data['status']));
         }
 
         $dbTransaction = $this->dbTransactionFactory->create();
-        $dbTransaction->addCommitCallback(function () use ($invoiceState, $payment, $orderState, $order, $data) {
+        $dbTransaction->addCommitCallback(function () use ($orderStatus, $invoiceState, $payment, $orderState, $order, $data) {
             $this->processInvoice($order, $invoiceState);
 
             $transaction = $this->buildTransaction($order, $data['preappId']);
@@ -138,7 +137,7 @@ class Index extends Action implements CsrfAwareActionInterface, HttpPostActionIn
             $payment->save();
 
             $order->setState($orderState);
-            $order->setStatus($order->getConfig()->getStateDefaultStatus($orderState));
+            $order->setStatus($orderStatus);
             $this->orderRepository->save($order);
 
             $orderPreApp = $this->orderPreAppFactory->create();

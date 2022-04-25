@@ -57,9 +57,9 @@ class OrderSaveAfter implements ObserverInterface
             return;
         }
 
-        $processingStatus = $this->getConfigValue('order_status');
+        [$state] = $this->getOrderStateAndStatus('order_status');
 
-        if ($order->getState() !== $processingStatus) {
+        if ($order->getState() !== $state) {
             return;
         }
 

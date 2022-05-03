@@ -6,6 +6,8 @@ namespace BnplPartners\Factoring004Magento\Controller;
 
 use BnplPartners\Factoring004\Api;
 use BnplPartners\Factoring004\Auth\BearerTokenAuth;
+use BnplPartners\Factoring004\ChangeStatus\CancelOrder;
+use BnplPartners\Factoring004\ChangeStatus\CancelStatus;
 use BnplPartners\Factoring004\ChangeStatus\MerchantsOrders;
 use BnplPartners\Factoring004\ChangeStatus\ReturnOrder;
 use BnplPartners\Factoring004\ChangeStatus\ReturnStatus;
@@ -26,6 +28,7 @@ use Magento\Sales\Api\Data\OrderInterface;
 use Magento\Sales\Controller\Adminhtml\Order\Creditmemo\Save;
 use Magento\Sales\Controller\Adminhtml\Order\CreditmemoLoader;
 use Magento\Sales\Helper\Data as SalesData;
+use Magento\Sales\Model\Order;
 use Magento\Sales\Model\Order\Email\Sender\CreditmemoSender;
 use Magento\Sales\Model\OrderRepository;
 
@@ -72,13 +75,14 @@ class SaveCreditMemo extends Save
      */
     public function execute()
     {
-        /*header('Content-Type: text/plain');
-        print_r($this->getRequest()->getParams());
-        exit;*/
-
         $order = $this->orderRepository->get($this->getRequest()->getParam('order_id'));
 
         if ($order->getPayment()->getMethod() !== Factoring004::METHOD_CODE || !$this->getRequest()->isPost()) {
+            return parent::execute();
+        }
+
+        if ($order->getState() !== Order::STATE_COMPLETE) {
+            $this->cancelOrder((string) $order->getEntityId());
             return parent::execute();
         }
 
@@ -225,6 +229,30 @@ class SaveCreditMemo extends Save
     {
         if (!is_string($otp) || !preg_match('/^\d{4}$/', $otp)) {
             throw new LocalizedException(__('OTP code is not valid'));
+        }
+    }
+
+    /**
+     * @throws \BnplPartners\Factoring004\Exception\PackageException
+     */
+    private function cancelOrder(string $orderId): void
+    {
+        $response = $this->createApi()
+            ->changeStatus
+            ->changeStatusJson([
+                new MerchantsOrders($this->getConfigValue('partner_code'), [
+                    new CancelOrder($orderId, CancelStatus::CANCEL()),
+                ])
+            ]);
+
+        foreach ($response->getErrorResponses() as $errorResponse) {
+            throw new ErrorResponseException(new ErrorResponse(
+                $errorResponse->getCode(),
+                $errorResponse->getMessage(),
+                null,
+                null,
+                $errorResponse->getError()
+            ));
         }
     }
 }

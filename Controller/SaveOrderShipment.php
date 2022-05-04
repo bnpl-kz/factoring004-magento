@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace BnplPartners\Factoring004Magento\Controller;
 
-use BnplPartners\Factoring004\Api;
-use BnplPartners\Factoring004\Auth\BearerTokenAuth;
 use BnplPartners\Factoring004\ChangeStatus\DeliveryOrder;
 use BnplPartners\Factoring004\ChangeStatus\DeliveryStatus;
 use BnplPartners\Factoring004\ChangeStatus\MerchantsOrders;
@@ -13,7 +11,7 @@ use BnplPartners\Factoring004\Exception\ErrorResponseException;
 use BnplPartners\Factoring004\Otp\CheckOtp;
 use BnplPartners\Factoring004\Otp\SendOtp;
 use BnplPartners\Factoring004\Response\ErrorResponse;
-use BnplPartners\Factoring004Magento\Helper\ConfigReaderTrait;
+use BnplPartners\Factoring004Magento\Helper\ApiCreationTrait;
 use BnplPartners\Factoring004Magento\Model\Factoring004;
 use Magento\Backend\App\Action\Context;
 use Magento\Backend\Model\Session;
@@ -29,10 +27,11 @@ use Magento\Sales\Model\OrderRepository;
 use Magento\Shipping\Controller\Adminhtml\Order\Shipment\Save;
 use Magento\Shipping\Controller\Adminhtml\Order\ShipmentLoader;
 use Magento\Shipping\Model\Shipping\LabelGenerator;
+use Psr\Log\LoggerInterface;
 
 class SaveOrderShipment extends Save
 {
-    use ConfigReaderTrait;
+    use ApiCreationTrait;
 
     /**
      * @var \Magento\Sales\Model\OrderRepository
@@ -49,6 +48,11 @@ class SaveOrderShipment extends Save
      */
     private $session;
 
+    /**
+     * @var \Psr\Log\LoggerInterface
+     */
+    private $logger;
+
     public function __construct(
         Context $context,
         ShipmentLoader $shipmentLoader,
@@ -58,6 +62,7 @@ class SaveOrderShipment extends Save
         OrderRepository $orderRepository,
         RedirectFactory $redirectFactory,
         Session $session,
+        LoggerInterface $logger,
         ShipmentValidatorInterface $shipmentValidator = null,
         SalesData $salesData = null
     ) {
@@ -74,6 +79,7 @@ class SaveOrderShipment extends Save
         $this->orderRepository = $orderRepository;
         $this->redirectFactory = $redirectFactory;
         $this->session = $session;
+        $this->logger = $logger;
     }
 
     /**
@@ -136,14 +142,6 @@ class SaveOrderShipment extends Save
     private function getConfirmableDeliveryMethods(): array
     {
         return explode(',', $this->getConfigValue('confirmable_delivery_methods'));
-    }
-
-    private function createApi(): Api
-    {
-        return Api::create(
-            $this->getConfigValue('api_host'),
-            new BearerTokenAuth($this->getConfigValue('oauth_accounting_service_token'))
-        );
     }
 
     /**
@@ -215,5 +213,10 @@ class SaveOrderShipment extends Save
         if (!is_string($otp) || !preg_match('/^\d{4}$/', $otp)) {
             throw new LocalizedException(__('OTP code is not valid'));
         }
+    }
+
+    protected function getTransportLogger(): LoggerInterface
+    {
+        return $this->logger;
     }
 }

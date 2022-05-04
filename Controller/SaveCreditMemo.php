@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace BnplPartners\Factoring004Magento\Controller;
 
-use BnplPartners\Factoring004\Api;
-use BnplPartners\Factoring004\Auth\BearerTokenAuth;
 use BnplPartners\Factoring004\ChangeStatus\CancelOrder;
 use BnplPartners\Factoring004\ChangeStatus\CancelStatus;
 use BnplPartners\Factoring004\ChangeStatus\MerchantsOrders;
@@ -15,7 +13,7 @@ use BnplPartners\Factoring004\Exception\ErrorResponseException;
 use BnplPartners\Factoring004\Otp\CheckOtpReturn;
 use BnplPartners\Factoring004\Otp\SendOtpReturn;
 use BnplPartners\Factoring004\Response\ErrorResponse;
-use BnplPartners\Factoring004Magento\Helper\ConfigReaderTrait;
+use BnplPartners\Factoring004Magento\Helper\ApiCreationTrait;
 use BnplPartners\Factoring004Magento\Model\Factoring004;
 use Magento\Backend\App\Action;
 use Magento\Backend\Model\Session;
@@ -31,10 +29,11 @@ use Magento\Sales\Helper\Data as SalesData;
 use Magento\Sales\Model\Order;
 use Magento\Sales\Model\Order\Email\Sender\CreditmemoSender;
 use Magento\Sales\Model\OrderRepository;
+use Psr\Log\LoggerInterface;
 
 class SaveCreditMemo extends Save
 {
-    use ConfigReaderTrait;
+    use ApiCreationTrait;
 
     /**
      * @var \Magento\Sales\Model\OrderRepository
@@ -51,6 +50,11 @@ class SaveCreditMemo extends Save
      */
     private $session;
 
+    /**
+     * @var \Psr\Log\LoggerInterface
+     */
+    private $logger;
+
     public function __construct(
         Action\Context $context,
         CreditmemoLoader $creditmemoLoader,
@@ -60,6 +64,7 @@ class SaveCreditMemo extends Save
         ScopeConfigInterface $config,
         RedirectFactory $redirectFactory,
         Session $session,
+        LoggerInterface $logger,
         SalesData $salesData = null
     ) {
         parent::__construct($context, $creditmemoLoader, $creditmemoSender, $resultForwardFactory, $salesData);
@@ -68,6 +73,7 @@ class SaveCreditMemo extends Save
         $this->config = $config;
         $this->redirectFactory = $redirectFactory;
         $this->session = $session;
+        $this->logger = $logger;
     }
 
     /**
@@ -145,14 +151,6 @@ class SaveCreditMemo extends Save
     private function getConfirmableDeliveryMethods(): array
     {
         return explode(',', $this->getConfigValue('confirmable_delivery_methods'));
-    }
-
-    private function createApi(): Api
-    {
-        return Api::create(
-            $this->getConfigValue('api_host'),
-            new BearerTokenAuth($this->getConfigValue('oauth_accounting_service_token'))
-        );
     }
 
     /**
@@ -254,5 +252,10 @@ class SaveCreditMemo extends Save
                 $errorResponse->getError()
             ));
         }
+    }
+
+    protected function getTransportLogger(): LoggerInterface
+    {
+        return $this->logger;
     }
 }

@@ -4,10 +4,8 @@ declare(strict_types=1);
 
 namespace BnplPartners\Factoring004Magento\Observer;
 
-use BnplPartners\Factoring004\Api;
-use BnplPartners\Factoring004\Auth\BearerTokenAuth;
 use BnplPartners\Factoring004\PreApp\PreAppMessage;
-use BnplPartners\Factoring004Magento\Helper\ConfigReaderTrait;
+use BnplPartners\Factoring004Magento\Helper\ApiCreationTrait;
 use BnplPartners\Factoring004Magento\Model\Factoring004;
 use Magento\Checkout\Model\Session;
 use Magento\Framework\App\Config\ScopeConfigInterface;
@@ -16,10 +14,11 @@ use Magento\Framework\Event\ObserverInterface;
 use Magento\Framework\UrlInterface;
 use Magento\Sales\Api\Data\OrderAddressInterface;
 use Magento\Sales\Model\Order\Item;
+use Psr\Log\LoggerInterface;
 
 class OrderSaveAfter implements ObserverInterface
 {
-    use ConfigReaderTrait;
+    use ApiCreationTrait;
 
     /**
      * @var \Magento\Checkout\Model\Session
@@ -36,12 +35,22 @@ class OrderSaveAfter implements ObserverInterface
      */
     private $api;
 
-    public function __construct(ScopeConfigInterface $config, Session $session, UrlInterface $url)
-    {
+    /**
+     * @var \Psr\Log\LoggerInterface
+     */
+    private $logger;
+
+    public function __construct(
+        ScopeConfigInterface $config,
+        Session $session,
+        UrlInterface $url,
+        LoggerInterface $logger
+    ) {
         $this->config = $config;
         $this->session = $session;
         $this->url = $url;
         $this->api = $this->createApi();
+        $this->logger = $logger;
     }
 
     /**
@@ -82,14 +91,6 @@ class OrderSaveAfter implements ObserverInterface
         ]));
 
         $this->session->setData(Factoring004::PREAPP_URI_SESSION_KEY, $response->getRedirectLink());
-    }
-
-    private function createApi(): Api
-    {
-        return Api::create(
-            $this->getConfigValue('api_host'),
-            new BearerTokenAuth($this->getConfigValue('oauth_preapp_token')),
-        );
     }
 
     /**
@@ -139,5 +140,10 @@ class OrderSaveAfter implements ObserverInterface
         }, array_filter($items, function (Item $item) {
             return !empty($item->getPrice());
         })));
+    }
+
+    protected function getTransportLogger(): LoggerInterface
+    {
+        return $this->logger;
     }
 }

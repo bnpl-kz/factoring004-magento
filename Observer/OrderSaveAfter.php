@@ -31,11 +31,6 @@ class OrderSaveAfter implements ObserverInterface
     private $url;
 
     /**
-     * @var \BnplPartners\Factoring004\Api
-     */
-    private $api;
-
-    /**
      * @var \Psr\Log\LoggerInterface
      */
     private $logger;
@@ -49,7 +44,6 @@ class OrderSaveAfter implements ObserverInterface
         $this->config = $config;
         $this->session = $session;
         $this->url = $url;
-        $this->api = $this->createApi();
         $this->logger = $logger;
     }
 
@@ -75,7 +69,7 @@ class OrderSaveAfter implements ObserverInterface
         $billingAddress = $order->getBillingAddress();
         $items = $this->collectItems($order->getItems());
 
-        $response = $this->api->preApps->preApp(PreAppMessage::createFromArray([
+        $response = $this->createApi()->preApps->preApp(PreAppMessage::createFromArray([
             'partnerData' => $this->getPartnerData(),
             'billNumber' => (string) $order->getId(),
             'billAmount' => (int) ceil($order->getGrandTotal()),

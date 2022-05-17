@@ -102,7 +102,9 @@ class SaveOrderShipment extends Save
 
         $this->validateOtp($otp);
 
-        return $this->handleCheckOtp($otp, (string) $order->getEntityId());
+        $orderAmount = ceil($order->getPayment()->getAmountPaid());
+
+        return $this->handleCheckOtp($otp, (string) $order->getEntityId(), (int) $orderAmount);
     }
 
     /**
@@ -112,15 +114,17 @@ class SaveOrderShipment extends Save
     {
         $code = $order->getShippingMethod(true)->getCarrierCode();
 
+        $orderAmount = ceil($order->getPayment()->getAmountPaid());
+
         if (in_array($code, $this->getConfirmableDeliveryMethods(), true)) {
-            $this->sendOtp((string) $order->getEntityId());
+            $this->sendOtp((string) $order->getEntityId(), (int) $orderAmount);
             $this->storeShipmentDataToSession();
 
             return $this->redirectFactory->create()
                 ->setPath($this->_backendUrl->getUrl('factoring004/otp/index/do/shipment'));
         }
 
-        $this->confirmWithoutOtp((string) $order->getEntityId());
+        $this->confirmWithoutOtp((string) $order->getEntityId(), (int) $orderAmount);
 
         return parent::execute();
     }
@@ -128,9 +132,9 @@ class SaveOrderShipment extends Save
     /**
      * @throws \BnplPartners\Factoring004\Exception\PackageException
      */
-    private function handleCheckOtp(string $otp, string $orderId): ResultInterface
+    private function handleCheckOtp(string $otp, string $orderId, int $orderAmount): ResultInterface
     {
-        $this->checkOtp($otp, $orderId);
+        $this->checkOtp($otp, $orderId, $orderAmount);
         $this->removeShipmentDataFromSession();
 
         return parent::execute();
@@ -147,24 +151,24 @@ class SaveOrderShipment extends Save
     /**
      * @throws \BnplPartners\Factoring004\Exception\PackageException
      */
-    private function sendOtp(string $orderId): void
+    private function sendOtp(string $orderId, int $orderAmount): void
     {
         $this->createApi()
             ->otp
-            ->sendOtp(new SendOtp($this->getConfigValue('partner_code'), $orderId));
+            ->sendOtp(new SendOtp($this->getConfigValue('partner_code'), $orderId, $orderAmount));
     }
 
     /**
      * @throws \BnplPartners\Factoring004\Exception\PackageException
      */
-    private function confirmWithoutOtp(string $orderId): void
+    private function confirmWithoutOtp(string $orderId, int $orderAmount): void
     {
         $response = $this->createApi()
             ->changeStatus
             ->changeStatusJson([
                 new MerchantsOrders($this->getConfigValue('partner_code'), [
-                    new DeliveryOrder($orderId, DeliveryStatus::DELIVERED()),
-                ])
+                    new DeliveryOrder($orderId, DeliveryStatus::DELIVERED(), $orderAmount),
+                ]),
             ]);
 
         foreach ($response->getErrorResponses() as $errorResponse) {
@@ -181,11 +185,11 @@ class SaveOrderShipment extends Save
     /**
      * @throws \BnplPartners\Factoring004\Exception\PackageException
      */
-    private function checkOtp(string $otp, string $orderId): void
+    private function checkOtp(string $otp, string $orderId, int $orderAmount): void
     {
         $this->createApi()
             ->otp
-            ->checkOtp(new CheckOtp($this->getConfigValue('partner_code'), $orderId, $otp));
+            ->checkOtp(new CheckOtp($this->getConfigValue('partner_code'), $orderId, $otp, $orderAmount));
     }
 
     private function storeShipmentDataToSession(): void

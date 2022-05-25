@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace BnplPartners\Factoring004Magento\Controller\PostLink;
 
+use BnplPartners\Factoring004\Exception\InvalidSignatureException;
+use BnplPartners\Factoring004\Signature\PostLinkSignatureValidator;
 use BnplPartners\Factoring004Magento\Helper\ConfigReaderTrait;
 use BnplPartners\Factoring004Magento\Model\Factoring004;
 use BnplPartners\Factoring004Magento\Model\OrderPreAppFactory;
@@ -69,6 +71,11 @@ class Index extends Action implements CsrfAwareActionInterface, HttpPostActionIn
      */
     private $jsonFactory;
 
+    /**
+     * @var \BnplPartners\Factoring004\Signature\PostLinkSignatureValidator
+     */
+    private $signatureValidator;
+
     public function __construct(
         Context $context,
         Request $request,
@@ -90,6 +97,7 @@ class Index extends Action implements CsrfAwareActionInterface, HttpPostActionIn
         $this->dbTransactionFactory = $dbTransactionFactory;
         $this->jsonFactory = $jsonFactory;
         $this->config = $config;
+        $this->signatureValidator = new PostLinkSignatureValidator($this->getConfigValue('partner_code'));
     }
 
     /**
@@ -178,6 +186,14 @@ class Index extends Action implements CsrfAwareActionInterface, HttpPostActionIn
 
         if (empty($data['preappId']) || !is_string($data['preappId'])) {
             throw new LocalizedException(__('PreappId is missing or is not a string'));
+        }
+
+        if (isset($data['signature'])) {
+            try {
+                $this->signatureValidator->validateData($data);
+            } catch (InvalidSignatureException $e) {
+                throw new LocalizedException(__('Signature is not valid'), $e);
+            }
         }
     }
 

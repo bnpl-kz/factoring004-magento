@@ -188,12 +188,10 @@ class Index extends Action implements CsrfAwareActionInterface, HttpPostActionIn
             throw new LocalizedException(__('PreappId is missing or is not a string'));
         }
 
-        if (isset($data['signature'])) {
-            try {
-                $this->signatureValidator->validateData($data);
-            } catch (InvalidSignatureException $e) {
-                throw new LocalizedException(__('Signature is not valid'), $e);
-            }
+        try {
+            $this->signatureValidator->validateData($data);
+        } catch (InvalidSignatureException $e) {
+            throw new LocalizedException(__('Signature is not valid'), $e);
         }
     }
 

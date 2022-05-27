@@ -26,6 +26,7 @@ use Magento\Sales\Api\Data\TransactionInterface;
 use Magento\Sales\Api\OrderRepositoryInterface;
 use Magento\Sales\Model\Order\Invoice;
 use Magento\Sales\Model\Order\Payment\Transaction\BuilderInterface;
+use Psr\Log\LoggerInterface;
 
 class Index extends Action implements CsrfAwareActionInterface, HttpPostActionInterface
 {
@@ -72,6 +73,11 @@ class Index extends Action implements CsrfAwareActionInterface, HttpPostActionIn
     private $jsonFactory;
 
     /**
+     * @var \Psr\Log\LoggerInterface
+     */
+    private $logger;
+
+    /**
      * @var \BnplPartners\Factoring004\Signature\PostLinkSignatureValidator
      */
     private $signatureValidator;
@@ -85,7 +91,8 @@ class Index extends Action implements CsrfAwareActionInterface, HttpPostActionIn
         BuilderInterface $transactionBuilder,
         TransactionFactory $dbTransactionFactory,
         JsonFactory $jsonFactory,
-        ScopeConfigInterface $config
+        ScopeConfigInterface $config,
+        LoggerInterface $logger
     ) {
         parent::__construct($context);
 
@@ -97,6 +104,7 @@ class Index extends Action implements CsrfAwareActionInterface, HttpPostActionIn
         $this->dbTransactionFactory = $dbTransactionFactory;
         $this->jsonFactory = $jsonFactory;
         $this->config = $config;
+        $this->logger = $logger;
         $this->signatureValidator = new PostLinkSignatureValidator($this->getConfigValue('partner_code'));
     }
 
@@ -108,6 +116,7 @@ class Index extends Action implements CsrfAwareActionInterface, HttpPostActionIn
         $data = $this->request->getBodyParams();
 
         $this->validateData($data);
+        $this->logger->debug(json_encode($data));
 
         $order = $this->orderRepository->get((int) $data['billNumber']);
         $payment = $order->getPayment();

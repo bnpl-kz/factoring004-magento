@@ -93,17 +93,15 @@ class SaveCreditMemo extends Save
         }
 
         $fields = $this->getRequest()->getParam('fields') ?? ['otp' => null];
-        $creditMemo = $this->getRequest()->getParam('creditmemo');
         $otp = $fields['otp'];
 
-        $amountRefund = array_sum([
-            $order->getSubtotalInclTax(),
-            $creditMemo['shipping_amount'],
-            $creditMemo['adjustment_positive'],
-            $creditMemo['adjustment_negative'],
-        ]);
+        $this->creditmemoLoader->setOrderId($this->getRequest()->getParam('order_id'));
+        $this->creditmemoLoader->setCreditmemoId($this->getRequest()->getParam('creditmemo_id'));
+        $this->creditmemoLoader->setCreditmemo($this->getRequest()->getParam('creditmemo'));
+        $this->creditmemoLoader->setInvoiceId($this->getRequest()->getParam('invoice_id'));
 
-        $amountRemaining = (int) ceil($order->getGrandTotal() - $amountRefund);
+        $creditMemo = $this->creditmemoLoader->load();
+        $amountRemaining = (int) ceil($order->getGrandTotal() - $creditMemo->getGrandTotal());
 
         if ($otp === null) {
             return $this->handleRefund($order, $amountRemaining);

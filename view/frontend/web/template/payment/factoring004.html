@@ -7,13 +7,13 @@
         <label data-bind="attr: {'for': getCode()}" class="label"><span data-bind="text: getTitle()"></span></label>
     </div>
 
-    <div style="margin-bottom: 20px" data-bind="attr: {hidden: !isChecked() || logoUrl === null}" hidden>
-        <img style="max-width: 100%" data-bind="attr: {src: logoUrl(), alt: $t('Factoring 0-0-4')}">
-    </div>
-
-    <div data-bind="attr: {hidden: !isChecked() || description === null}, text: description()" hidden></div>
-
     <div data-bind="if: getCode() == isChecked()">
+        <div style="margin-bottom: 20px" data-bind="if: isChecked() && logoUrl">
+            <img style="max-width: 100%" data-bind="attr: {src: logoUrl(), alt: $t('Factoring 0-0-4')}">
+        </div>
+
+        <div data-bind="if: description"><span data-bind="text: description()"></span></div>
+
         <style>
             .app__SDpv1 {
                 -webkit-font-smoothing: antialiased;
@@ -178,7 +178,7 @@
                 }
             }
         </style>
-        <div data-bind="html: schedule"></div>
+        <div id="payment-factoring004-schedule" data-bind="html: schedule"></div>
     </div>
 
     <div class="payment-method-content">

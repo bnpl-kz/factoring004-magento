@@ -19,7 +19,7 @@ trait ApiCreationTrait
     {
         return Api::create(
             $this->getConfigValue('api_host'),
-            new BearerTokenAuth($this->getConfigValue('oauth_preapp_token')),
+            new BearerTokenAuth($this->getOAuthToken()),
             $this->createTransport()
         );
     }
@@ -36,4 +36,6 @@ trait ApiCreationTrait
     {
         return new NullLogger();
     }
+
+    abstract protected function getOAuthToken(): string;
 }

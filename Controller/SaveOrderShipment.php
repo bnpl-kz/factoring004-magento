@@ -223,4 +223,9 @@ class SaveOrderShipment extends Save
     {
         return $this->logger;
     }
+
+    protected function getOAuthToken(): string
+    {
+        return $this->getConfigValue('oauth_accounting_service_token');
+    }
 }

@@ -8,6 +8,7 @@ use BnplPartners\Factoring004\ChangeStatus\DeliveryOrder;
 use BnplPartners\Factoring004\ChangeStatus\DeliveryStatus;
 use BnplPartners\Factoring004\ChangeStatus\MerchantsOrders;
 use BnplPartners\Factoring004\Exception\ErrorResponseException;
+use BnplPartners\Factoring004\Exception\PackageException;
 use BnplPartners\Factoring004\Otp\CheckOtp;
 use BnplPartners\Factoring004\Otp\SendOtp;
 use BnplPartners\Factoring004\Response\ErrorResponse;
@@ -87,24 +88,38 @@ class SaveOrderShipment extends Save
      */
     public function execute(): ResultInterface
     {
-        $order = $this->orderRepository->get($this->getRequest()->getParam('order_id'));
+        try {
+            $order = $this->orderRepository->get($this->getRequest()->getParam('order_id'));
 
-        if ($order->getPayment()->getMethod() !== Factoring004::METHOD_CODE || !$this->getRequest()->isPost()) {
-            return parent::execute();
+            if ($order->getPayment()->getMethod() !== Factoring004::METHOD_CODE || !$this->getRequest()->isPost()) {
+                return parent::execute();
+            }
+
+            $fields = $this->getRequest()->getParam('fields') ?? ['otp' => null];
+            $otp = $fields['otp'];
+
+            if ($otp === null) {
+                return $this->handleDelivery($order);
+            }
+
+            $this->validateOtp($otp);
+
+            $orderAmount = ceil($order->getPayment()->getAmountPaid());
+
+            return $this->handleCheckOtp($otp, (string) $order->getEntityId(), (int) $orderAmount);
+        } catch (ErrorResponseException $e) {
+            $response = $e->getErrorResponse();
+
+            $this->messageManager->addErrorMessage($response->getError() . ': ' . $response->getMessage());
+        } catch (LocalizedException $e) {
+            $this->logger->error($e);
+            $this->messageManager->addErrorMessage($e->getMessage());
+        } catch (PackageException $e) {
+            $this->logger->error($e);
+            $this->messageManager->addErrorMessage(__($e->getMessage()));
         }
 
-        $fields = $this->getRequest()->getParam('fields') ?? ['otp' => null];
-        $otp = $fields['otp'];
-
-        if ($otp === null) {
-            return $this->handleDelivery($order);
-        }
-
-        $this->validateOtp($otp);
-
-        $orderAmount = ceil($order->getPayment()->getAmountPaid());
-
-        return $this->handleCheckOtp($otp, (string) $order->getEntityId(), (int) $orderAmount);
+        return $this->redirectFactory->create()->setRefererOrBaseUrl();
     }
 
     /**

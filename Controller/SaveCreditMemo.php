@@ -10,6 +10,7 @@ use BnplPartners\Factoring004\ChangeStatus\MerchantsOrders;
 use BnplPartners\Factoring004\ChangeStatus\ReturnOrder;
 use BnplPartners\Factoring004\ChangeStatus\ReturnStatus;
 use BnplPartners\Factoring004\Exception\ErrorResponseException;
+use BnplPartners\Factoring004\Exception\PackageException;
 use BnplPartners\Factoring004\Otp\CheckOtpReturn;
 use BnplPartners\Factoring004\Otp\SendOtpReturn;
 use BnplPartners\Factoring004\Response\ErrorResponse;
@@ -81,35 +82,49 @@ class SaveCreditMemo extends Save
      */
     public function execute()
     {
-        $order = $this->orderRepository->get($this->getRequest()->getParam('order_id'));
+        try {
+            $order = $this->orderRepository->get($this->getRequest()->getParam('order_id'));
 
-        if ($order->getPayment()->getMethod() !== Factoring004::METHOD_CODE || !$this->getRequest()->isPost()) {
-            return parent::execute();
+            if ($order->getPayment()->getMethod() !== Factoring004::METHOD_CODE || !$this->getRequest()->isPost()) {
+                return parent::execute();
+            }
+
+            if ($order->getState() !== Order::STATE_COMPLETE) {
+                $this->cancelOrder((string) $order->getEntityId());
+                return parent::execute();
+            }
+
+            $fields = $this->getRequest()->getParam('fields') ?? ['otp' => null];
+            $otp = $fields['otp'];
+
+            $this->creditmemoLoader->setOrderId($this->getRequest()->getParam('order_id'));
+            $this->creditmemoLoader->setCreditmemoId($this->getRequest()->getParam('creditmemo_id'));
+            $this->creditmemoLoader->setCreditmemo($this->getRequest()->getParam('creditmemo'));
+            $this->creditmemoLoader->setInvoiceId($this->getRequest()->getParam('invoice_id'));
+
+            $creditMemo = $this->creditmemoLoader->loadOnly();
+            $amountRemaining = (int) ceil($order->getGrandTotal() - $creditMemo->getGrandTotal());
+
+            if ($otp === null) {
+                return $this->handleRefund($order, $amountRemaining);
+            }
+
+            $this->validateOtp($otp);
+
+            return $this->handleCheckOtp($otp, (string) $order->getEntityId(), $amountRemaining);
+        } catch (ErrorResponseException $e) {
+            $response = $e->getErrorResponse();
+
+            $this->messageManager->addErrorMessage($response->getError() . ': ' . $response->getMessage());
+        } catch (LocalizedException $e) {
+            $this->logger->error($e);
+            $this->messageManager->addErrorMessage($e->getMessage());
+        } catch (PackageException $e) {
+            $this->logger->error($e);
+            $this->messageManager->addErrorMessage(__($e->getMessage()));
         }
 
-        if ($order->getState() !== Order::STATE_COMPLETE) {
-            $this->cancelOrder((string) $order->getEntityId());
-            return parent::execute();
-        }
-
-        $fields = $this->getRequest()->getParam('fields') ?? ['otp' => null];
-        $otp = $fields['otp'];
-
-        $this->creditmemoLoader->setOrderId($this->getRequest()->getParam('order_id'));
-        $this->creditmemoLoader->setCreditmemoId($this->getRequest()->getParam('creditmemo_id'));
-        $this->creditmemoLoader->setCreditmemo($this->getRequest()->getParam('creditmemo'));
-        $this->creditmemoLoader->setInvoiceId($this->getRequest()->getParam('invoice_id'));
-
-        $creditMemo = $this->creditmemoLoader->loadOnly();
-        $amountRemaining = (int) ceil($order->getGrandTotal() - $creditMemo->getGrandTotal());
-
-        if ($otp === null) {
-            return $this->handleRefund($order, $amountRemaining);
-        }
-
-        $this->validateOtp($otp);
-
-        return $this->handleCheckOtp($otp, (string) $order->getEntityId(), $amountRemaining);
+        return $this->redirectFactory->create()->setRefererOrBaseUrl();
     }
 
     /**

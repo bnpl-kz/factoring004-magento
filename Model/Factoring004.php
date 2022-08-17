@@ -15,6 +15,7 @@ class Factoring004 extends AbstractMethod
     protected $_canCapture = true;
     protected $_canCapturePartial = true;
     protected $_canRefund = true;
+    protected $_canRefundInvoicePartial = true;
     protected $_canAuthorize = true;
     protected $_canUseCheckout = true;
 

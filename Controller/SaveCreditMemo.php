@@ -14,6 +14,7 @@ use BnplPartners\Factoring004\Otp\CheckOtpReturn;
 use BnplPartners\Factoring004\Otp\SendOtpReturn;
 use BnplPartners\Factoring004\Response\ErrorResponse;
 use BnplPartners\Factoring004Magento\Helper\ApiCreationTrait;
+use BnplPartners\Factoring004Magento\Model\CreditMemoLoader;
 use BnplPartners\Factoring004Magento\Model\Factoring004;
 use Magento\Backend\App\Action;
 use Magento\Backend\Model\Session;
@@ -24,7 +25,6 @@ use Magento\Framework\Controller\ResultInterface;
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Sales\Api\Data\OrderInterface;
 use Magento\Sales\Controller\Adminhtml\Order\Creditmemo\Save;
-use Magento\Sales\Controller\Adminhtml\Order\CreditmemoLoader;
 use Magento\Sales\Helper\Data as SalesData;
 use Magento\Sales\Model\Order;
 use Magento\Sales\Model\Order\Email\Sender\CreditmemoSender;
@@ -100,7 +100,7 @@ class SaveCreditMemo extends Save
         $this->creditmemoLoader->setCreditmemo($this->getRequest()->getParam('creditmemo'));
         $this->creditmemoLoader->setInvoiceId($this->getRequest()->getParam('invoice_id'));
 
-        $creditMemo = $this->creditmemoLoader->load();
+        $creditMemo = $this->creditmemoLoader->loadOnly();
         $amountRemaining = (int) ceil($order->getGrandTotal() - $creditMemo->getGrandTotal());
 
         if ($otp === null) {

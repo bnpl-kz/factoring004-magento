@@ -3,4 +3,10 @@
         xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
     <preference for="Magento\Framework\Webapi\Rest\Response"
                 type="BnplPartners\Factoring004Magento\Response\Response"/>
+
+    <preference for="Magento\Checkout\Model\GuestPaymentInformationManagement"
+                type="BnplPartners\Factoring004Magento\Model\GuestPaymentInformationManagement"/>
+
+    <preference for="Magento\Checkout\Model\PaymentInformationManagement"
+                type="BnplPartners\Factoring004Magento\Model\PaymentInformationManagement"/>
 </config>

@@ -16,8 +16,6 @@
                 <currency>KZT</currency>
                 <is_gateway>1</is_gateway>
                 <sort_order>1</sort_order>
-                <min_order_total>6000</min_order_total>
-                <max_order_total>200000</max_order_total>
             </bnplpartners_factoring004magento>
         </payment>
     </default>

@@ -3,8 +3,20 @@
         <input type="radio"
                name="payment[method]"
                class="radio"
-               data-bind="attr: {'id': getCode()}, value: getCode(), checked: isChecked, click: selectPaymentMethod, visible: isRadioButtonVisible()"/>
-        <label data-bind="attr: {'for': getCode()}" class="label"><span data-bind="text: getTitle()"></span></label>
+               data-bind="attr: {'id': getCode(), 'disabled': isDisabled()}, value: getCode(), checked: isChecked, click: selectPaymentMethod, visible: isRadioButtonVisible()"/>
+        <label data-bind="attr: {'for': getCode()}, style: {opacity: isDisabled() ? '0.5' : '1'}" class="label">
+            <span data-bind="text: getTitle()"></span>
+        </label>
+    </div>
+
+    <div data-bind="if: isDisabled()" style="color: red">
+        <p data-bind="if: amount() < minAmount()">
+            <span data-bind="text: $t('Min amount of shopping is %1. %2 is not enough.').replace('%1', minAmountFormatted()).replace('%2', amountNotEnoughFormatted())"></span>
+        </p>
+
+        <p data-bind="if: amount() > maxAmount()">
+            <span data-bind="text: $t('Max amount of shopping is %1. %2 is exceeded.').replace('%1', maxAmountFormatted()).replace('%2', amountExceededFormatted())"></span>
+        </p>
     </div>
 
     <div data-bind="if: getCode() == isChecked()">

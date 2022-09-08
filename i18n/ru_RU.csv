@@ -28,3 +28,5 @@ Logo,Логотип
 "I have read and agree Factoring 0-0-4's ","Я ознакомлен и согласен с "
 "terms and conditions","условиями Рассрочки 0-0-4"
 "You should agree the terms and conditions","Вам необходимо ознакомиться с условиями Рассрочки 0-0-4"
+"Min amount of shopping is %1. %2 is not enough.", "Минимальная сумма заказа %1. Не хватает %2."
+"Max amount of shopping is %1. %2 is exceeded.", "Максимальная сумма заказа %1. Превышает %2."

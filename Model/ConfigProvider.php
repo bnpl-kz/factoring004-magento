@@ -14,6 +14,8 @@ class ConfigProvider implements ConfigProviderInterface
 
     protected const MEDIA_PATH = '/media/factoring004/';
     protected const DEFAULT_LOGO = 'default/logo.svg';
+    protected const MIN_AMOUNT = 6000;
+    protected const MAX_AMOUNT = 200000;
 
     public function __construct(ScopeConfigInterface $scopeConfig)
     {
@@ -31,6 +33,8 @@ class ConfigProvider implements ConfigProviderInterface
                     'agreementUrl' => $agreementFile ? static::MEDIA_PATH. ltrim($agreementFile, '/') : null,
                     'logoUrl' => static::MEDIA_PATH . ltrim($logoFile, '/'),
                     'description' => $this->getConfigValue('description'),
+                    'minAmount' => static::MIN_AMOUNT,
+                    'maxAmount' => static::MAX_AMOUNT,
                 ],
             ],
         ];

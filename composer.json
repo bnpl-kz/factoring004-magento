@@ -1,5 +1,5 @@
 {
-    "name": "bnpl-partners/magento-factoring004",
+    "name": "bnpl-kz/factoring004-magento",
     "description": "Factoring004 plugin for magento 2",
     "type": "magento2-module",
     "minimum-stability": "dev",

@@ -16,6 +16,7 @@ class ConfigProvider implements ConfigProviderInterface
     protected const DEFAULT_LOGO = 'default/logo.svg';
     protected const MIN_AMOUNT = 6000;
     protected const MAX_AMOUNT = 200000;
+    private const PRODUCTION_DOMAINS = ['bnpl.kz', 'www.bnpl.kz'];
 
     public function __construct(ScopeConfigInterface $scopeConfig)
     {
@@ -35,8 +36,17 @@ class ConfigProvider implements ConfigProviderInterface
                     'description' => $this->getConfigValue('description'),
                     'minAmount' => static::MIN_AMOUNT,
                     'maxAmount' => static::MAX_AMOUNT,
+                    'paymentGatewayType' => $this->getConfigValue('payment_gateway_type'),
+                    'isModalProd' => $this->isModalProd(),
                 ],
             ],
         ];
+    }
+
+    private function isModalProd(): bool
+    {
+        $host = parse_url($this->getConfigValue('api_host'), PHP_URL_HOST);
+
+        return in_array($host, static::PRODUCTION_DOMAINS, true);
     }
 }

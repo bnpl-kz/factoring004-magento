@@ -7,9 +7,13 @@ define(
         'Magento_Checkout/js/model/totals',
         'Magento_Checkout/js/model/quote',
         'Magento_Catalog/js/price-utils',
+        'Magento_Checkout/js/action/redirect-on-success',
         'BnplPartners_Factoring004Magento/js/view/payment/schedule/factoring004',
+        window.checkoutConfig.payment.bnplpartners_factoring004magento.isModalProd
+          ? 'bnpl-kz-modal-prod'
+          : 'bnpl-kz-modal-dev',
     ],
-    function (Component, $, ko, fullScreenLoader, totals, quote, priceUtils, Factoring004Payment) {
+    function (Component, $, ko, fullScreenLoader, totals, quote, priceUtils, redirectOnSuccessAction, Factoring004Payment, BnplKzApi) {
         'use strict';
         return Component.extend({
             defaults: {
@@ -24,13 +28,37 @@ define(
             initialize () {
                 this._super();
                 this.schedule = this._renderSchedule();
+                this._bnplKzPaymentWidget = new BnplKzApi.CPO({
+                    rootId: 'payment-factoring004-widget',
+                    callbacks: {
+                        onEnd: () => redirectOnSuccessAction.execute(),
+                        onError: (err) => {
+                            if (err.code === 'clientError') {
+                                this._redirectToPayment();
+                            }
+                        },
+                    },
+                });
+            },
+
+            placeOrder (data, event) {
+                if (this._redirectLink) {
+                    this._openWidget();
+                    return false;
+                }
+
+                return this._super(data, event);
             },
 
             afterPlaceOrder () {
-                if (this._redirectLink) {
-                    fullScreenLoader.startLoader();
-                    window.location.replace(this._redirectLink);
+                if (!this._redirectLink) return;
+
+                if (this.isWidget()) {
+                    this._openWidget();
+                    return;
                 }
+
+               this._redirectToPayment();
             },
 
             getPlaceOrderDeferredObject () {
@@ -80,6 +108,21 @@ define(
 
             amountExceededFormatted () {
                 return priceUtils.formatPrice(Math.round(this.amount() - this.maxAmount()), quote.getPriceFormat());
+            },
+
+            isWidget () {
+                return window.checkoutConfig.payment.bnplpartners_factoring004magento.paymentGatewayType === 'modal';
+            },
+
+            _redirectToPayment () {
+                fullScreenLoader.startLoader();
+                window.location.replace(this._redirectLink);
+            },
+
+            _openWidget () {
+                this._bnplKzPaymentWidget.render({
+                    redirectLink: this._redirectLink,
+                });
             },
 
             _renderSchedule () {

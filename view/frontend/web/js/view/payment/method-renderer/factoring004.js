@@ -37,6 +37,7 @@ define(
                                 this._redirectToPayment();
                             }
                         },
+                        onRestart: (redirectLink) => this._redirectLink = redirectLink,
                     },
                 });
             },

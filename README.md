@@ -4,6 +4,7 @@
 - [Installation](#installation)
     * [Via composer](#via-composer)
     * [Manual](#manual)
+- [Plugin registration](#plugin-registration)
 - [Plugin configuration](#plugin-configuration)
 
 ## Requirements
@@ -15,15 +16,13 @@
 
 ### Via composer
 
-Coming soon
+```bash
+composer require bnpl-kz/factoring004-magento
+```
+
+Done!
 
 ### Manual
-
-Download a zip archive of the repository and unpack it
-
-```bash
-unzip factoring004-magento-main.zip
-```
 
 Create module directory into ```<magento-root>/app/code/BnplPartners/``` folder
 
@@ -31,11 +30,29 @@ Create module directory into ```<magento-root>/app/code/BnplPartners/``` folder
 mkdir -p <magento-root>/app/code/BnplPartners/
 ```
 
+Download a zip archive of the repository and unpack it
+
+```bash
+unzip factoring004-magento-main.zip
+```
+
 Move extracted files to ```<magento-root>/app/code/BnplPartners/Factoring004Magento``` folder
 
 ```bash
 mv factoring004-magento-main <magento-root>/app/code/BnplPartners/Factoring004Magento
 ```
+
+Install plugin dependencies
+
+```bash
+composer require bnpl-partners/factoring004
+```
+
+Done!
+
+## Plugin registration
+
+Skip this step if you are using the latest version of magento or module was automatically registered.
 
 Go to ```<magento-root>``` and run commands below
 
@@ -68,14 +85,6 @@ Clean the cache
 ```bash
 php bin/magento cache:clean
 ```
-
-Install plugin dependencies
-
-```bash
-composer require bnpl-partners/factoring004:dev-legacy
-```
-
-Done!
 
 ## Plugin configuration
 

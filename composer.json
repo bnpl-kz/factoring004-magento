@@ -4,7 +4,7 @@
     "type": "magento2-module",
     "minimum-stability": "dev",
     "license": "MIT",
-    "version": "0.1.0",
+    "version": "0.2.0",
     "require": {
         "php": ">=7.3",
         "ext-json": "*",
@@ -14,7 +14,7 @@
     "autoload": {
         "files": ["registration.php"],
         "psr-4": {
-            "BnplPartners\\Factoring004\\": ""
+            "BnplPartners\\Factoring004Magento\\": ""
         }
     },
     "prefer-stable": true,

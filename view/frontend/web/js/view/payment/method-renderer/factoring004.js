@@ -38,6 +38,10 @@ define(
                             }
                         },
                         onRestart: (redirectLink) => this._redirectLink = redirectLink,
+                        onDeclined () {
+                            fullScreenLoader.startLoader();
+                            window.location.replace('/checkout/onepage/failure/');
+                        },
                     },
                 });
             },

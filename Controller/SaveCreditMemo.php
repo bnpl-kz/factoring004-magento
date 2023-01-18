@@ -105,6 +105,10 @@ class SaveCreditMemo extends Save
             $creditMemo = $this->creditmemoLoader->loadOnly();
             $amountRemaining = (int) ceil($order->getGrandTotal() - $creditMemo->getGrandTotal());
 
+            if ($amountRemaining > 0) {
+                $amountRemaining = (int) ceil($order->getGrandTotal() - $amountRemaining);
+            }
+
             if ($otp === null) {
                 return $this->handleRefund($order, $amountRemaining);
             }

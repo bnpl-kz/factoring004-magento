@@ -88,6 +88,14 @@ php bin/magento cache:clean
 
 ## Plugin configuration
 
-1. Go to ```Admin``` > ```Stores``` > ```Settings``` >```Configuration``` > ```Sales``` > ```Payment Methods``` > ```Factoring 0-0-4```
-2. Fill required parameters
-3. Enable the payment method
+Go to ```Admin``` > ```Stores``` >```Configuration```
+
+![Menu!](screenshots/menu.png)
+
+And keep going to ```Sales``` > ```Payment Methods```
+
+![Sales menu!](screenshots/sales-menu.png)
+
+Then configure payment method ```Factoring 0-0-4```
+
+![Sales menu!](screenshots/payment-method.png)

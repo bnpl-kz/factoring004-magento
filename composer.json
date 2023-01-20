@@ -4,7 +4,7 @@
     "type": "magento2-module",
     "minimum-stability": "dev",
     "license": "MIT",
-    "version": "0.2.0",
+    "version": "0.3.0",
     "require": {
         "php": ">=7.3",
         "ext-json": "*",

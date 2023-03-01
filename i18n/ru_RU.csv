@@ -4,8 +4,6 @@
 "Status is missing or is not a string","Поле status не указано или не является строкой"
 "BillNumber is missing or is not a string","Поле billNumber не указано или не является строкой"
 "PreappId is missing or is not a string","Поле preappId не указано или не является строкой"
-"OTP code is not valid","Неверный OTP код"
-Check,Проверить
 "Factoring 0-0-4","Рассрочка 0-0-4"
 "Place Order","Заказать"
 Enabled,Включен
@@ -19,7 +17,6 @@ Logo,Логотип
 "Override default status for new orders","Переопределить статус нового заказа по-умолчанию"
 "Paid Order Status","Статус Оплаченных Заказов"
 "Declined Order Status","Статус Неоплаченных Заказов"
-"Check OTP","Проверить OTP"
 "Delete File","Удалить файл"
 "Min amount of shopping is %1. %2 is not enough.", "Минимальная сумма заказа %1. Не хватает %2."
 "Max amount of shopping is %1. %2 is exceeded.", "Максимальная сумма заказа %1. Превышает %2."

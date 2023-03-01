@@ -12,7 +12,6 @@ use Magento\Framework\App\RequestInterface;
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\View\Element\AbstractBlock;
 use Magento\Framework\View\Result\PageFactory;
-use Magento\Sales\Controller\Adminhtml\Order\Creditmemo\Save as CreditMemoSave;
 
 class Index extends Action
 {
@@ -226,12 +225,6 @@ class Index extends Action
      */
     private function createAction(): Action
     {
-        $action = $this->getDoAction();
-
-        if ($action === 'refund') {
-            return $this->_objectManager->get(CreditMemoSave::class);
-        }
-
         throw new LocalizedException(__('Unsupported action given'));
     }
 

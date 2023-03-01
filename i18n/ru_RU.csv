@@ -17,8 +17,6 @@ Logo,Логотип
 "Extensions: jpg, jpeg, gif, png","Расширения: jpg, jpeg, gif, png"
 "Agreement File","Файл оферты"
 "Upload an agreement PDF file if you need to show it a customer","Загрузите файл оферты, если вам необходимо его отобразить клиенту"
-"OTP Confirmable Delivery Methods","Способы доставки для подтверждения через смс "
-"Order status changes such as shipment, refund and cancel placed with a selected delivery method will be confirmed by OTP","При смене статусов заказа на доставка, возврат и отмена, потребуются подтверждение OTP"
 "New Order Status","Статус Новых Заказов"
 "Override default status for new orders","Переопределить статус нового заказа по-умолчанию"
 "Paid Order Status","Статус Оплаченных Заказов"

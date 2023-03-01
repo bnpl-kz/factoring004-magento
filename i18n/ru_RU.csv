@@ -15,17 +15,12 @@ Title,Название
 Description,Описание
 Logo,Логотип
 "Extensions: jpg, jpeg, gif, png","Расширения: jpg, jpeg, gif, png"
-"Agreement File","Файл оферты"
-"Upload an agreement PDF file if you need to show it a customer","Загрузите файл оферты, если вам необходимо его отобразить клиенту"
 "New Order Status","Статус Новых Заказов"
 "Override default status for new orders","Переопределить статус нового заказа по-умолчанию"
 "Paid Order Status","Статус Оплаченных Заказов"
 "Declined Order Status","Статус Неоплаченных Заказов"
 "Check OTP","Проверить OTP"
 "Delete File","Удалить файл"
-"I have read and agree Factoring 0-0-4's ","Я ознакомлен и согласен с "
-"terms and conditions","условиями Рассрочки 0-0-4"
-"You should agree the terms and conditions","Вам необходимо ознакомиться с условиями Рассрочки 0-0-4"
 "Min amount of shopping is %1. %2 is not enough.", "Минимальная сумма заказа %1. Не хватает %2."
 "Max amount of shopping is %1. %2 is exceeded.", "Максимальная сумма заказа %1. Превышает %2."
 "Payment Gateway Type", "Вид интерфейса клиентского пути"

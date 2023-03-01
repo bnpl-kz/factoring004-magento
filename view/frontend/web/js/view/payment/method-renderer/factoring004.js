@@ -23,8 +23,6 @@ define(
                 schedule: '',
             },
 
-            termsChecked: ko.observable(false),
-
             initialize () {
                 this._super();
                 this.schedule = this._renderSchedule();
@@ -69,10 +67,6 @@ define(
             getPlaceOrderDeferredObject () {
                 return this._super()
                     .done((data, type, jqXHR) => this._redirectLink = jqXHR.getResponseHeader('X-Location'));
-            },
-
-            agreementUrl () {
-                return window.checkoutConfig.payment.bnplpartners_factoring004magento.agreementUrl;
             },
 
             logoUrl () {

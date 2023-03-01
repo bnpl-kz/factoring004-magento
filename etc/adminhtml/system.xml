@@ -82,15 +82,6 @@
                     <backend_model>BnplPartners\Factoring004Magento\Model\PartnerWebsite</backend_model>
                 </field>
 
-                <field id="agreement_file" translate="label comment" type="file" sortOrder="75" showInDefault="1" showInWebsite="1"
-                       showInStore="1">
-                    <label>Agreement File</label>
-                    <backend_model>BnplPartners\Factoring004Magento\Model\AgreementFile</backend_model>
-                    <upload_dir config="system" scope_info="1">factoring004</upload_dir>
-                    <base_url type="media" scope_info="1">factoring004</base_url>
-                    <comment>Upload an agreement PDF file if you need to show it a customer</comment>
-                </field>
-
                 <field id="order_status" translate="label tooltip" type="select" sortOrder="85" showInDefault="1"
                        showInWebsite="1" showInStore="0">
                     <label>New Order Status</label>

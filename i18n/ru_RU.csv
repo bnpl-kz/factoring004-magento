@@ -18,8 +18,6 @@ Logo,Логотип
 "Paid Order Status","Статус Оплаченных Заказов"
 "Declined Order Status","Статус Неоплаченных Заказов"
 "Delete File","Удалить файл"
-"Min amount of shopping is %1. %2 is not enough.", "Минимальная сумма заказа %1. Не хватает %2."
-"Max amount of shopping is %1. %2 is exceeded.", "Максимальная сумма заказа %1. Превышает %2."
 "Payment Gateway Type", "Вид интерфейса клиентского пути"
 "Redirect", "Перенаправление"
 "Modal", "Модальное окно"

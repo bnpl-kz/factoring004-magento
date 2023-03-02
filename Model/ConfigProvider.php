@@ -14,8 +14,6 @@ class ConfigProvider implements ConfigProviderInterface
 
     protected const MEDIA_PATH = '/media/factoring004/';
     protected const DEFAULT_LOGO = 'default/logo.svg';
-    protected const MIN_AMOUNT = 6000;
-    protected const MAX_AMOUNT = 200000;
     private const PRODUCTION_DOMAINS = ['bnpl.kz', 'www.bnpl.kz'];
 
     public function __construct(ScopeConfigInterface $scopeConfig)
@@ -32,8 +30,6 @@ class ConfigProvider implements ConfigProviderInterface
                 Factoring004::METHOD_CODE => [
                     'logoUrl' => static::MEDIA_PATH . ltrim($logoFile, '/'),
                     'description' => $this->getConfigValue('description'),
-                    'minAmount' => static::MIN_AMOUNT,
-                    'maxAmount' => static::MAX_AMOUNT,
                     'paymentGatewayType' => $this->getConfigValue('payment_gateway_type'),
                     'isModalProd' => $this->isModalProd(),
                 ],

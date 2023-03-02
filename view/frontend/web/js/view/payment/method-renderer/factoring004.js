@@ -4,15 +4,12 @@ define(
         'jquery',
         'ko',
         'Magento_Checkout/js/model/full-screen-loader',
-        'Magento_Checkout/js/model/totals',
-        'Magento_Checkout/js/model/quote',
-        'Magento_Catalog/js/price-utils',
         'Magento_Checkout/js/action/redirect-on-success',
         window.checkoutConfig.payment.bnplpartners_factoring004magento.isModalProd
           ? 'bnpl-kz-modal-prod'
           : 'bnpl-kz-modal-dev',
     ],
-    function (Component, $, ko, fullScreenLoader, totals, quote, priceUtils, redirectOnSuccessAction, BnplKzApi) {
+    function (Component, $, ko, fullScreenLoader, redirectOnSuccessAction, BnplKzApi) {
         'use strict';
         return Component.extend({
             defaults: {
@@ -72,38 +69,6 @@ define(
 
             description () {
                 return window.checkoutConfig.payment.bnplpartners_factoring004magento.description;
-            },
-
-            minAmount () {
-                return window.checkoutConfig.payment.bnplpartners_factoring004magento.minAmount;
-            },
-
-            maxAmount () {
-                return window.checkoutConfig.payment.bnplpartners_factoring004magento.maxAmount;
-            },
-
-            minAmountFormatted () {
-                return priceUtils.formatPrice(this.minAmount(), quote.getPriceFormat());
-            },
-
-            maxAmountFormatted () {
-                return priceUtils.formatPrice(this.maxAmount(), quote.getPriceFormat());
-            },
-
-            isDisabled () {
-                return this.amount() < this.minAmount() || this.amount() > this.maxAmount();
-            },
-
-            amount () {
-                return totals.totals().grand_total;
-            },
-
-            amountNotEnoughFormatted () {
-                return priceUtils.formatPrice(Math.round(this.minAmount() - this.amount()), quote.getPriceFormat());
-            },
-
-            amountExceededFormatted () {
-                return priceUtils.formatPrice(Math.round(this.amount() - this.maxAmount()), quote.getPriceFormat());
             },
 
             isWidget () {

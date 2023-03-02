@@ -15,8 +15,8 @@ class PaymentGatewayType implements \Magento\Framework\Option\ArrayInterface
     public function toOptionArray(): array
     {
         return [
-            ['value' => static::TYPE_REDIRECT, 'label' => __(ucfirst(static::TYPE_REDIRECT))],
             ['value' => static::TYPE_MODAL, 'label' => __(ucfirst(static::TYPE_MODAL))],
+            ['value' => static::TYPE_REDIRECT, 'label' => __(ucfirst(static::TYPE_REDIRECT))],
         ];
     }
 }

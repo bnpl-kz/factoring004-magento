@@ -24,7 +24,6 @@ class ConfigProvider implements ConfigProviderInterface
         return [
             'payment' => [
                 Factoring004::METHOD_CODE => [
-                    'description' => $this->getConfigValue('description'),
                     'paymentGatewayType' => $this->getConfigValue('payment_gateway_type'),
                     'isModalProd' => $this->isModalProd(),
                 ],

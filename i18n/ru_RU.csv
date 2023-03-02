@@ -10,7 +10,6 @@ Enabled,Включен
 Yes,Да
 No,Нет
 Title,Название
-Description,Описание
 "New Order Status","Статус Новых Заказов"
 "Override default status for new orders","Переопределить статус нового заказа по-умолчанию"
 "Paid Order Status","Статус Оплаченных Заказов"

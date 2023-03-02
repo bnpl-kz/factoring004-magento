@@ -63,10 +63,6 @@ define(
                     .done((data, type, jqXHR) => this._redirectLink = jqXHR.getResponseHeader('X-Location'));
             },
 
-            description () {
-                return window.checkoutConfig.payment.bnplpartners_factoring004magento.description;
-            },
-
             isWidget () {
                 return window.checkoutConfig.payment.bnplpartners_factoring004magento.paymentGatewayType === 'modal';
             },

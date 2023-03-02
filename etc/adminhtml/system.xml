@@ -18,12 +18,6 @@
                     <validate>required-entry</validate>
                 </field>
 
-                <field id="description" translate="label" type="textarea" sortOrder="32" showInDefault="1" showInWebsite="1"
-                       showInStore="1">
-                    <label>Description</label>
-                    <validate>required-entry</validate>
-                </field>
-
                 <field id="api_host" type="text" sortOrder="35" showInDefault="1" showInWebsite="1"
                        showInStore="1">
                     <label>API Host</label>

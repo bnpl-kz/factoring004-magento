@@ -11,8 +11,6 @@ Yes,Да
 No,Нет
 Title,Название
 Description,Описание
-Logo,Логотип
-"Extensions: jpg, jpeg, gif, png","Расширения: jpg, jpeg, gif, png"
 "New Order Status","Статус Новых Заказов"
 "Override default status for new orders","Переопределить статус нового заказа по-умолчанию"
 "Paid Order Status","Статус Оплаченных Заказов"

@@ -12,8 +12,6 @@ class ConfigProvider implements ConfigProviderInterface
 {
     use ConfigReaderTrait;
 
-    protected const MEDIA_PATH = '/media/factoring004/';
-    protected const DEFAULT_LOGO = 'default/logo.svg';
     private const PRODUCTION_DOMAINS = ['bnpl.kz', 'www.bnpl.kz'];
 
     public function __construct(ScopeConfigInterface $scopeConfig)
@@ -23,12 +21,9 @@ class ConfigProvider implements ConfigProviderInterface
 
     public function getConfig(): array
     {
-        $logoFile = $this->getConfigValue('logo') ?? static::DEFAULT_LOGO;
-
         return [
             'payment' => [
                 Factoring004::METHOD_CODE => [
-                    'logoUrl' => static::MEDIA_PATH . ltrim($logoFile, '/'),
                     'description' => $this->getConfigValue('description'),
                     'paymentGatewayType' => $this->getConfigValue('payment_gateway_type'),
                     'isModalProd' => $this->isModalProd(),

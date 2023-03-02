@@ -8,24 +8,21 @@ define(
         'Magento_Checkout/js/model/quote',
         'Magento_Catalog/js/price-utils',
         'Magento_Checkout/js/action/redirect-on-success',
-        'BnplPartners_Factoring004Magento/js/view/payment/schedule/factoring004',
         window.checkoutConfig.payment.bnplpartners_factoring004magento.isModalProd
           ? 'bnpl-kz-modal-prod'
           : 'bnpl-kz-modal-dev',
     ],
-    function (Component, $, ko, fullScreenLoader, totals, quote, priceUtils, redirectOnSuccessAction, Factoring004Payment, BnplKzApi) {
+    function (Component, $, ko, fullScreenLoader, totals, quote, priceUtils, redirectOnSuccessAction, BnplKzApi) {
         'use strict';
         return Component.extend({
             defaults: {
                 template: 'BnplPartners_Factoring004Magento/payment/factoring004',
                 redirectAfterPlaceOrder: false,
                 _redirectLink: '',
-                schedule: '',
             },
 
             initialize () {
                 this._super();
-                this.schedule = this._renderSchedule();
                 this._bnplKzPaymentWidget = new BnplKzApi.CPO({
                     rootId: 'payment-factoring004-widget',
                     callbacks: {
@@ -123,18 +120,6 @@ define(
                     redirectLink: this._redirectLink,
                 });
             },
-
-            _renderSchedule () {
-                const elem = document.createElement('div');
-                const schedule = new Factoring004Payment.PaymentSchedule({
-                    elemId: 'payment-factoring004-schedule',
-                    totalAmount: totals.totals().grand_total,
-                });
-
-                schedule.renderTo(elem);
-
-                return elem.innerHTML;
-            }
         });
     }
 );

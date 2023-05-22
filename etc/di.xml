@@ -9,4 +9,7 @@
 
     <preference for="Magento\Checkout\Model\PaymentInformationManagement"
                 type="BnplPartners\Factoring004Magento\Model\PaymentInformationManagement"/>
+
+    <preference for="Psr\SimpleCache\CacheInterface"
+                type="BnplPartners\Factoring004Magento\Helper\CacheAdapter"/>
 </config>

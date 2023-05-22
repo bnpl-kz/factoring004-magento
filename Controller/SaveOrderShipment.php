@@ -29,6 +29,7 @@ use Magento\Shipping\Controller\Adminhtml\Order\Shipment\Save;
 use Magento\Shipping\Controller\Adminhtml\Order\ShipmentLoader;
 use Magento\Shipping\Model\Shipping\LabelGenerator;
 use Psr\Log\LoggerInterface;
+use Psr\SimpleCache\CacheInterface;
 
 class SaveOrderShipment extends Save
 {
@@ -54,6 +55,11 @@ class SaveOrderShipment extends Save
      */
     private $logger;
 
+    /**
+     * @var CacheInterface
+     */
+    private $cacheAdapter;
+
     public function __construct(
         Context $context,
         ShipmentLoader $shipmentLoader,
@@ -64,6 +70,7 @@ class SaveOrderShipment extends Save
         RedirectFactory $redirectFactory,
         Session $session,
         LoggerInterface $logger,
+        CacheInterface $cacheAdapter,
         ShipmentValidatorInterface $shipmentValidator = null,
         SalesData $salesData = null
     ) {
@@ -81,6 +88,7 @@ class SaveOrderShipment extends Save
         $this->redirectFactory = $redirectFactory;
         $this->session = $session;
         $this->logger = $logger;
+        $this->cacheAdapter = $cacheAdapter;
     }
 
     /**

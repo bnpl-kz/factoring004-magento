@@ -31,6 +31,7 @@ use Magento\Sales\Model\Order;
 use Magento\Sales\Model\Order\Email\Sender\CreditmemoSender;
 use Magento\Sales\Model\OrderRepository;
 use Psr\Log\LoggerInterface;
+use Psr\SimpleCache\CacheInterface;
 
 class SaveCreditMemo extends Save
 {
@@ -56,6 +57,11 @@ class SaveCreditMemo extends Save
      */
     private $logger;
 
+    /**
+     * @var CacheInterface
+     */
+    private $cacheAdapter;
+
     public function __construct(
         Action\Context $context,
         CreditmemoLoader $creditmemoLoader,
@@ -66,6 +72,7 @@ class SaveCreditMemo extends Save
         RedirectFactory $redirectFactory,
         Session $session,
         LoggerInterface $logger,
+        CacheInterface $cacheAdapter,
         SalesData $salesData = null
     ) {
         parent::__construct($context, $creditmemoLoader, $creditmemoSender, $resultForwardFactory, $salesData);
@@ -75,6 +82,7 @@ class SaveCreditMemo extends Save
         $this->redirectFactory = $redirectFactory;
         $this->session = $session;
         $this->logger = $logger;
+        $this->cacheAdapter = $cacheAdapter;
     }
 
     /**

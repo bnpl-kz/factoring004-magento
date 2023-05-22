@@ -15,6 +15,7 @@ use Magento\Framework\UrlInterface;
 use Magento\Sales\Api\Data\OrderAddressInterface;
 use Magento\Sales\Model\Order\Item;
 use Psr\Log\LoggerInterface;
+use Psr\SimpleCache\CacheInterface;
 
 class OrderSaveAfter implements ObserverInterface
 {
@@ -35,16 +36,23 @@ class OrderSaveAfter implements ObserverInterface
      */
     private $logger;
 
+    /**
+     * @var CacheInterface
+     */
+    private $cacheAdapter;
+
     public function __construct(
         ScopeConfigInterface $config,
         Session $session,
         UrlInterface $url,
-        LoggerInterface $logger
+        LoggerInterface $logger,
+        CacheInterface $cacheAdapter
     ) {
         $this->config = $config;
         $this->session = $session;
         $this->url = $url;
         $this->logger = $logger;
+        $this->cacheAdapter = $cacheAdapter;
     }
 
     /**

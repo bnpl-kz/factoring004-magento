@@ -141,8 +141,4 @@ class OrderSaveAfter implements ObserverInterface
         return $this->logger;
     }
 
-    protected function getOAuthToken(): string
-    {
-        return $this->getConfigValue('oauth_preapp_token');
-    }
 }

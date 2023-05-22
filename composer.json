@@ -8,7 +8,7 @@
     "require": {
         "php": ">=7.3",
         "ext-json": "*",
-        "bnpl-partners/factoring004": "^0.1 || ^1.0",
+        "bnpl-partners/factoring004": "^2.0",
         "magento/framework": ">=100.0.4"
     },
     "autoload": {

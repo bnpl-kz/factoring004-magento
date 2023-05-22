@@ -39,15 +39,15 @@
                     <validate>required-entry validate-url</validate>
                 </field>
 
-                <field id="oauth_preapp_token" type="textarea" sortOrder="40" showInDefault="1" showInWebsite="1"
+                <field id="oauth_login" type="text" sortOrder="40" showInDefault="1" showInWebsite="1"
                        showInStore="1">
-                    <label>OAuth Preapp Token</label>
+                    <label>OAuth login</label>
                     <validate>required-entry</validate>
                 </field>
 
-                <field id="oauth_accounting_service_token" type="textarea" sortOrder="45" showInDefault="1" showInWebsite="1"
+                <field id="oauth_password" type="text" sortOrder="45" showInDefault="1" showInWebsite="1"
                        showInStore="1">
-                    <label>OAuth Accounting Service Token</label>
+                    <label>OAuth password</label>
                     <validate>required-entry</validate>
                 </field>
 
